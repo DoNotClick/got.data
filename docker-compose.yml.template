@@ -1,0 +1,43 @@
+version: '2'
+services:
+    web-app:
+        container_name: got.data
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - database
+        links:
+            - mongodb
+        environment:
+            - databaseuri=<DATABASEURI>
+            - databasecollection=<DBCOLLECTION>
+            - databaseuser=<DB-USER>
+            - databasepassword=<DB-USER-PASSWORD>
+            - accesstoken=<ACCESS-TOKEN>
+            - VIRTUAL_HOST=<VIRTUAL-HOST-NAME>
+    database:
+        container_name: mongodb
+        image: mongo:latest
+        ports:
+            - 27017:27017
+        environment:
+            - MONGO_DATA_DIR=/data/db
+            - MONGO_LOG_DIR=/dev/null
+        volumes:
+            - ./data/db:/data/db
+        command: mongod --smallfiles --logpath=/dev/null # --quiet
+    nginx-proxy:
+      image: jwilder/nginx-proxy
+      container_name: nginx-proxy
+      ports:
+        - "80:80"
+        - "443:443"
+      volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+        - /usr/share/nginx/html
+        - /etc/nginx/vhost.d
+        - certs-volume:/etc/nginx/certs:ro
+volumes:
+  certs-volume:
+  db-data:

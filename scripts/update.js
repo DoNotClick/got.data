@@ -1,84 +1,37 @@
 require(__dirname + '/../' + 'constants');
 
-/*
- * check console input
- */
-var requested = process.env.npm_config_collection;
-if(requested === undefined) {
-    console.log('Provide which collection should be refilled. Example: npm refill --collection=characters ');
-    process.exit();
-}
-var possibleRefillings = [
-    'ages',
-    'characters',
-    'episodes',
-    'cities',
-    'continents',
-    'cultures',
-    'events',
-    'houses',
-    'regions',
-    'characterLocations',
-    'characterPaths',
-    'characterImages',
-    'characterPlods'
-]
+const config = require(__base + 'cfg/config');
+const mongoose = require('mongoose');
+const Filler = require("../app/controllers/filler/filler");
 
-if(possibleRefillings.indexOf(requested) < 0) {
-    console.log('Request ' + requested + ' is unknown. Possible refills: ' + possibleRefillings.join(', ') + '.');
-    process.exit();
-}
-/*
- * start
- */
-console.log('Refilling collection: '+ requested);
+const collection = process.env.npm_config_collection;
+const wiki = process.env.npm_config_wiki;
 
-var config = require('../cfg/config');
-var mongoose = require('mongoose');
-var express = require('express');
-var app = express();
-
-global.__base = __dirname + '/../';
-global.__appbase = __dirname + '/../app/';
-
-//Create the DB connection string
-var databaseParams = config.database;
-var dbConnection = "mongodb://";
-if (databaseParams.username.length > 0 && databaseParams.password.length > 0) {
-    dbConnection += databaseParams.username + ":" + databaseParams.password + "@";
-}
-dbConnection += databaseParams.uri + ":" + databaseParams.port + "/" + databaseParams.collection;
-
-//Create the connection to mongodb
-console.log("Going to connect to " + dbConnection);
-mongoose.connect(dbConnection);
-var db = mongoose.connection;
-
-// CONNECTION EVENTS: When successfully connected
-db.on('connected', function () {
-    console.log('Mongoose connected');
-});
-
-// If the connection throws an error
-db.on('error', function (err) {
-    console.log('Mongoose default connection error: ' + err);
-});
-
-// When the connection is disconnected
-db.on('disconnected', function () {
-    console.log('Mongoose default connection disconnected');
-});
-
-db.on('open', function () {
-    if(requested != 'characterPlods') {
-        var controller = require('../app/controllers/filler/' + requested);
-        controller.fill(2,function() {process.exit();});
+function getDbString(config) { //Create the DB connection string
+    let dbConnection = "mongodb://";
+    if (config.username.length > 0 && config.password.length > 0) {
+        dbConnection += config.username + ":" + config.password + "@";
     }
-    else {
-        var controller = require('../app/controllers/filler/characters');
-        controller.updatePlods(2,function(){
-            console.log('Finished updating plods!');
-            process.exit();
-        });
+    return dbConnection + config.uri + ":" + config.port + "/" + config.collection;
+}
+
+// 2 = update
+let filler = new Filler(wiki, collection, 2);
+
+mongoose.Promise = global.Promise;
+mongoose.connect(getDbString(config.database), {useNewUrlParser: true}).then(
+    (res) => {
+        console.log("Successfully connected to the database.")
+    }
+).catch((err) => {
+    console.log("Connection to database failed");
+});
+
+mongoose.connection.on('connected', async () => {
+    try {
+        filler.fill();
+        process.exit();
+    } catch(e) {
+        console.log(e);
     }
 });

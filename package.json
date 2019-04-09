@@ -1,52 +1,40 @@
 {
   "name": "got-api",
-  "version": "0.0.1",
-  "description": "This package provides and api that scrapes data from a wiki",
+  "version": "1.0.0",
+  "description": "This package provides an api that scrapes data from a wiki",
   "main": "app.js",
   "author": "",
   "license": "ISC",
   "private": true,
-  "homepage": "https://github.com/Rostlab/JS16_ProjectA",
+  "homepage": "https://github.com/got-show/got.data",
   "bugs": {
-    "url": "https://github.com/Rostlab/JS16_ProjectA/issues"
+    "url": "https://github.com/got-show/got.data/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Rostlab/JS16_ProjectA.git"
+    "url": "https://github.com/got-show/got.data.git"
   },
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 10.15.0"
   },
   "dependencies": {
-    "body-parser": "~1.15.0",
-    "cheerio": "^0.20.0",
-    "console-stamp": "^0.2.0",
-    "cors": "^2.7.1",
-    "express": "latest",
-    "gotarffplod": "latest",
-    "gotplod": "latest",
-    "jsonfile": "^2.2.3",
-    "kerberos": "~0.0.17",
-    "mongoose": "~4.4.5",
-    "node-uuid": "latest",
-    "nodemw": "0.8.1",
-    "swig": "^1.4.2",
-    "twitter": "latest"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-apidoc": "^0.11.0",
-    "grunt-contrib-clean": "~1.0.0",
-    "grunt-contrib-jshint": "~1.0.0",
-    "grunt-contrib-nodeunit": "~0.4.1"
+    "body-parser": "~1.18.3",
+    "cheerio": "~1.0.0-rc.2",
+    "console-stamp": "~0.2.7",
+    "cors": "~2.8.5",
+    "express": "~4.16.4",
+    "jsonfile": "~5.0.0",
+    "mongoose": "~5.4.21",
+    "mwbot": "~1.0.10",
+    "request": "~2.88.0",
+    "request-promise": "~4.2.4",
+    "uuid": "~3.3.2",
+    "jimp": "~0.6.1"
   },
   "scripts": {
     "start": "node app.js",
-    "test": "grunt test",
-    "check-updates": "npm-check-updates",
     "refill": "node scripts/refill.js",
     "update": "node scripts/update.js",
-    "safeUpdate": "node scripts/safeUpdate.js",
-    "updatePageRanks": "node scripts/updatePageRanks.js"
+    "safeupdate": "node scripts/safeupdate.js"
   }
 }
