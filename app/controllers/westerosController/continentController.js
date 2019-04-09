@@ -1,4 +1,4 @@
-const ContinentStore = require('../../stores/westeros/continents');
+const ContinentStore = require('../../stores/westeros/continent');
 
 class ContinentController {
     constructor() {

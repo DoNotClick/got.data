@@ -1,6 +1,6 @@
 
 'use strict';
-const HouseStore = require('../../stores/fandom/houseStore');
+const HouseStore = require('../../stores/fandom/house');
 class HouseController {
     constructor() {
         this.houseStore = new HouseStore();

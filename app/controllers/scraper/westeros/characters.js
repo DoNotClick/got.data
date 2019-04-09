@@ -20,7 +20,7 @@ class CharacterScraper {
         let characters = [];
         //Iterate through all the Characters
 
-        console.log("Loading all character names from the wiki. This might take a while");
+        console.log('[WesterosCharacterScraper] '.green + "Loading all character names from the wiki. This might take a while");
 
         let $ = cheerio.load(data.parse.text["*"]);
         let allLis = $('li');
@@ -35,14 +35,14 @@ class CharacterScraper {
             }
         });
 
-        console.log("All character names loaded");
+        console.log('[WesterosCharacterScraper] '.green + "All character names loaded");
 
         return characters;
     }
 
     async getAll()
     {
-        console.log("fetching all character names from wiki");
+        console.log('[WesterosCharacterScraper] '.green + "fetching all character names from wiki");
         let characters = await this.getAllNames();
 
         let result = [];
@@ -53,7 +53,7 @@ class CharacterScraper {
                 result.push(await this.get(characters[i]));
             }
             catch (e) {
-                console.log(e);
+                console.warn('[WesterosCharacterScraper] '.green + e);
             }
         }
 
@@ -63,11 +63,11 @@ class CharacterScraper {
     async get(characterName)
     {
         if(!characterName){
-            console.log("Skipped: "+characterName);
+            console.log('[WesterosCharacterScraper] '.green + "Skipped: "+characterName);
             return ;
         }
 
-        console.log("scraping "+characterName);
+        console.log('[WesterosCharacterScraper] '.green + "scraping "+characterName);
 
         let pageName = characterName.replace(/\s/g, "_");
         let data = await this.bot.request({
@@ -455,7 +455,6 @@ class CharacterScraper {
             character.age = 300 - parseInt(character.dateOfBirth);
         }
 
-        console.log(character.age);
         return character;
     }
 }

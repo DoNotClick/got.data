@@ -25,7 +25,7 @@ class AgesScraper {
             ages.push(age);
         }
         for (let i = 0; i < ages.length; i++) {
-            console.log(ages[i]);
+            console.log('[WesterosAgeScraper] '.green + ages[i]);
             if (i > 0 && i < ages.length - 1) {
                 ages[i].predecessor = ages[i - 1].name;
                 ages[i].successor = ages[i + 1].name;
@@ -93,7 +93,7 @@ class AgesScraper {
             ages.push(age);
         }
         for (let i = 0; i < ages.length; i++) {
-            console.log(ages[i]);
+            console.log('[WesterosAgeScraper] '.green + ages[i]);
             if (i > 0 && i < ages.length - 1) {
                 ages[i].predecessor = ages[i - 1].name;
                 ages[i].successor = ages[i + 1].name;

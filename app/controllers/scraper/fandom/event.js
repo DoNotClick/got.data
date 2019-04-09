@@ -25,10 +25,9 @@ class EventScraper {
                 // Process html like you would with jQuery...
                 
                 $('li[class=category-page__member]').each(function( index ) {
-                    var event = {"title": null, "reference": null};
+                    let event = {"title": null, "reference": null};
                     event.title = $(this).children('a').attr('title')
                     event.reference = $(this).children('a').attr('href')
-                    console.log(event.title);
 
                     if(!event.title.match(/Category/g)) {
                         events.push(event);
@@ -272,15 +271,13 @@ class EventScraper {
         let data = [];
 
         for(let i = 0; i < events.length; i++) {
-            console.log("started scraping ", events[i]);
+            console.log('[FandomEventScraper] '.green + "started scraping ", events[i]);
             let e = await this.scrape(events[i]);
-
-            
 
             if (e)
                 data.push(e);
             else
-                console.log("invalid page");
+                console.warn('[FandomEventScraper] '.green + "invalid page");
         }
         
         

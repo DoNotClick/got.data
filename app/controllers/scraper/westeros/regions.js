@@ -10,7 +10,7 @@ class RegionScraper {
     }
 
     async getAllNames() {
-        console.log("start getRegions");
+        console.log('[WesterosRegionScraper] '.green + "start getRegions");
 
         let regions = [];
 
@@ -26,13 +26,13 @@ class RegionScraper {
         let regionsCollection = [];
 
         for(let i = 0; i < regions.length; i++) {
-            console.log("Fetching regions (" + (regions.length - regionsCollection.length) + " left)");
+            console.log('[WesterosRegionScraper] '.green + "Fetching regions (" + (regions.length - regionsCollection.length) + " left)");
 
             try {
                 regionsCollection.push(await this.get(regions[i]))
             }
             catch (e) {
-                console.log(e);
+                console.warn('[WesterosRegionScraper] '.green + e);
             }
         }
 
@@ -41,11 +41,11 @@ class RegionScraper {
 
     async get(regionName) {
         if(!regionName){
-            console.log("Skipped: "+regionName);
+            console.log('[WesterosRegionScraper] '.green + "Skipped: "+regionName);
             return ;
         }
 
-        console.log("Fetching " + regionName);
+        console.log('[WesterosRegionScraper] '.green + "Fetching " + regionName);
 
         let pageName = regionName.replace(/\s/g, "_");
         let data = await this.bot.request({

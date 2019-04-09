@@ -1,4 +1,4 @@
-const BastardStore = require('../../stores/fandom/bastardStore');
+const BastardStore = require('../../stores/fandom/bastard');
 
 class BastardController {
     constructor() {

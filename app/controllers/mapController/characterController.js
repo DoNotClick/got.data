@@ -1,4 +1,4 @@
-const CharacterStore = require('../../stores/map/characterStore');
+const CharacterStore = require('../../stores/map/character');
 
 class CharacterController {
     constructor() {

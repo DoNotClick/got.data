@@ -1,4 +1,4 @@
-const HouseStore = require('../../stores/westeros/houses');
+const HouseStore = require('../../stores/westeros/house');
 class HouseController {
     constructor() {
         this.houseStore = new HouseStore();

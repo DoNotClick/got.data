@@ -9,7 +9,7 @@ class CultureScraper {
     }
 
     async getAll() {
-        console.log("start getAll");
+        console.log('[WesterosCultureScraper] '.green + "start getAll");
 
         let data = await this.bot.request({
             action: "parse",

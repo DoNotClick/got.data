@@ -16,7 +16,7 @@ class HouseScraper {
         let houses = [];
 
         //Iterate through all the houses
-        console.log("Loading all houses from the wiki. This might take a while");
+        console.log('[WesterosHouseScraper] '.green + "Loading all houses from the wiki. This might take a while");
 
         let totalhits = 20;
         for (let i = 0; i < totalhits; i = i + 10) {
@@ -35,7 +35,7 @@ class HouseScraper {
                 data = await this.bot.request(params);
             }
             catch(e) {
-                console.log(e);
+                console.warn('[WesterosHouseScraper] '.green + e);
 
                 continue;
             }
@@ -52,7 +52,7 @@ class HouseScraper {
                 houses.push({"name": decodeURIComponent(title), "slug": decodeURIComponent(title)});
             }
 
-            console.log("loading houses (", houses.length, "/", totalhits ,")")
+            console.log('[WesterosHouseScraper] '.green + "loading houses (", houses.length, "/", totalhits ,")")
         }
 
         return houses;
@@ -66,13 +66,13 @@ class HouseScraper {
 
         for(let i = 0; i < houses.length; i++)
         {
-            console.log("scraping", houses[i]["name"], "(", (i + 1), "/", houses.length, ")");
+            console.log('[WesterosHouseScraper] '.green + "scraping", houses[i]["name"], "(", (i + 1), "/", houses.length, ")");
 
             try {
                 data.push(await this.get(houses[i]["name"], houses[i]["slug"]));
             }
             catch (e) {
-                console.log(e);
+                console.warn('[WesterosHouseScraper] '.green + e);
             }
         }
 
@@ -203,7 +203,7 @@ class HouseScraper {
 
                     break;
                 default:
-                    console.log($this.find("th").text().trim(), $data.html());
+                    //console.log($this.find("th").text().trim(), $data.html());
             }
         });
 

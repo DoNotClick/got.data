@@ -1,4 +1,4 @@
-const CultureStore = require('../../stores/westeros/cultures');
+const CultureStore = require('../../stores/westeros/culture');
 
 class CultureController {
     constructor() {

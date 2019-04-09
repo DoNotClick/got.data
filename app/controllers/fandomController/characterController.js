@@ -1,6 +1,6 @@
 
 'use strict';
-const CharacterStore = require('../../stores/fandom/characterStore');
+const CharacterStore = require('../../stores/fandom/character');
 class CharacterController {
     constructor() {
         this.charStore = new CharacterStore();

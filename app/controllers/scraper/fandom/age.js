@@ -63,13 +63,13 @@ class AgeScraper {
             let character = names[i]["character"];
             let age = names[i]["actor"];
 
-            console.log("scraping", character["name"], "(", (i + 1), "/", names.length, ")");
+            console.log('[FandomAgeScraper] '.green + "scraping", character["name"], "(", (i + 1), "/", names.length, ")");
 
             try {
                 data.push(await this.scrape(character["name"], age["slug"]));
             }
             catch (e) {
-                console.log(e);
+                console.warn('[FandomAgeScraper] '.green + e);
             }
         }
         return data;

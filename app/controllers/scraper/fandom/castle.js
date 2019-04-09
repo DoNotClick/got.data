@@ -133,13 +133,13 @@ class CastleScrapper {
         let data = [];
 
         for(let i = 0; i < castles.length; i++) {
-            console.log("started scraping ", castles[i]);
+            console.log('[FandomCastleScraper] '.green + "started scraping ", castles[i]);
 
             try {
                 data.push(await this.scrape(castles[i]));
             }
             catch(e) {
-                console.log(e);
+                console.warn('[FandomCastleScraper] '.green + e);
             }
         }
 

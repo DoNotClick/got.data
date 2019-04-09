@@ -1,4 +1,4 @@
-const RegionStore = require('../../stores/map/regionStore');
+const RegionStore = require('../../stores/map/region');
 
 class RegionController {
     constructor() {

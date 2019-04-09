@@ -1,4 +1,4 @@
-const CastleStore = require('../../stores/fandom/castleStore');
+const CastleStore = require('../../stores/fandom/castle');
 
 class CastleController {
     constructor() {

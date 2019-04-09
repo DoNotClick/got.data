@@ -112,13 +112,13 @@ class TownScrapper {
         let data = [];
 
         for(let i = 0; i < towns.length; i++) {
-            console.log("started scraping ", towns[i]);
+            console.log('[FandomTownScraper] '.green + "started scraping ", towns[i]);
 
             try {
                 data.push(await this.scrape(towns[i]));
             }
             catch(e) {
-                console.log(e);
+                console.warn('[FandomTownScraper] '.green + e);
             }
         }
 

@@ -24,7 +24,7 @@ class CharacterLocationScraper {
                     return reject();
                 }
 
-                console.log('Cities from  file "'+file+'". No scrapping.');
+                console.log('[WesterosCharacterLocationScraper] '.green + 'Cities from  file "'+file+'". No scrapping.');
 
                 let names = [];
 
@@ -43,23 +43,23 @@ class CharacterLocationScraper {
 
     async getAll()
     {
-        console.log("fetching cities from db");
+        console.log('[WesterosCharacterLocationScraper] '.green + "fetching cities from db");
 
         let cityNames = await this.getAllCities();
 
-        console.log("fetching all character names from wiki");
+        console.log('[WesterosCharacterLocationScraper] '.green + "fetching all character names from wiki");
         let characters = await this.characterscraper.getAllNames();
 
         let result = [];
 
-        console.log("started fetching all character locations");
+        console.log('[WesterosCharacterLocationScraper] '.green + "started fetching all character locations");
         for(let i = 0; i < characters.length; i++)
         {
             try {
                 result.push(await this.get(characters[i], cityNames));
             }
             catch (e) {
-                console.log(e);
+                console.warn('[WesterosCharacterLocationScraper] '.green + e);
             }
         }
 
@@ -69,7 +69,7 @@ class CharacterLocationScraper {
     async get(characterName, locationNames)
     {
         if(!characterName){
-            console.log("Skipped: " + characterName);
+            console.log('[WesterosCharacterLocationScraper] '.green + "Skipped: " + characterName);
 
             return null;
         }
@@ -100,7 +100,7 @@ class CharacterLocationScraper {
         character.locations = locationHits;
 
         // console.log("Fetched " + character.name);
-        console.log("scraped locations " + character.locations);
+        console.log('[WesterosCharacterLocationScraper] '.green + "scraped locations " + character.locations);
 
         return character;
     }

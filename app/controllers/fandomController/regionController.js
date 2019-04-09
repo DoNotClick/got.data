@@ -1,4 +1,4 @@
-const RegionStore = require('../../stores/fandom/regionStore');
+const RegionStore = require('../../stores/fandom/region');
 
 class RegionController {
     constructor() {

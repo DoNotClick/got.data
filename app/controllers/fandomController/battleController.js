@@ -1,4 +1,4 @@
-const BattleStore = require('../../stores/fandom/battleStore');
+const BattleStore = require('../../stores/fandom/battle');
 
 class BattleController {
     constructor() {

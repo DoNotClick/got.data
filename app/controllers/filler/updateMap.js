@@ -1,6 +1,6 @@
-const CharacterFiller = require('./map/characterMap'),
-    EpisodeFiller = require('./map/episodeMap'),
-    RegionFiller = require('./map/regionMap');
+const CharacterFiller = require('./map/character'),
+    EpisodeFiller = require('./map/episode'),
+    RegionFiller = require('./map/region');
 
 
 class UpdateMap {
@@ -21,9 +21,9 @@ class UpdateMap {
     async basicUpdate() {
         const self = this;
 
-        console.log('filling map collections');
+        console.log('[MapUpdater] '.green + 'filling map collections');
         let promises = this.collections.map(async(collection) => {
-            console.log('checking ' + collection);
+            console.log('[MapUpdater] '.green + 'checking ' + collection);
             try {
                 switch(collection) {
                     case 'mapcharacters':
@@ -32,7 +32,7 @@ class UpdateMap {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[MapUpdater] '.green + "filling " + collection);
                                     self.characterFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -45,7 +45,7 @@ class UpdateMap {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[MapUpdater] '.green + "filling " + collection);
                                     self.episodeFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -58,7 +58,7 @@ class UpdateMap {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[MapUpdater] '.green + "filling " + collection);
                                     self.regionFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -66,12 +66,12 @@ class UpdateMap {
                             });
                         }));
                     default:
-                        console.error("invalid collection " + collection);
+                        console.error('[MapUpdater] '.green + "invalid collection " + collection);
 
                         return new Promise((resolve) => {resolve()});
                 }
             } catch(e) {
-                console.warn('error in fetching data ' + e);
+                console.warn('[MapUpdater] '.green + 'error in fetching data ' + e);
 
                 return new Promise((resolve) => {resolve()});
             }
@@ -80,7 +80,7 @@ class UpdateMap {
         // execute fillers without dependencies
         await Promise.all(promises);
 
-        console.log('Finished fetching map data.');
+        console.log('[MapUpdater] '.green + 'Finished fetching map data.');
     }
 }
 

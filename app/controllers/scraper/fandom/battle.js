@@ -217,13 +217,13 @@ class BattleScrapper {
         let data = [];
 
         for(let i = 0; i < battles.length; i++) {
-            console.log("started scraping ", battles[i]);
+            console.log('[FandomBattleScraper] '.green + "started scraping ", battles[i]);
 
             try {
                 data.push(await this.scrape(battles[i]));
             }
             catch(e) {
-                console.log(e);
+                console.warn('[FandomBattleScraper] '.green + e);
             }
         }
 

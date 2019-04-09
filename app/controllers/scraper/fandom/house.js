@@ -193,12 +193,12 @@ class HouseScrapper {
         let data = [];
 
         for(let i = 0; i < houses.length; i++) {
-            console.log("started scraping ", houses[i]);
+            console.log('[FandomHouseScraper] '.green + "started scraping ", houses[i]);
 
             try {
                 data.push(await this.scrape(houses[i]));
             } catch(e) {
-                console.log(e);
+                console.warn('[FandomHouseScraper] '.green + e);
             }
         }
 

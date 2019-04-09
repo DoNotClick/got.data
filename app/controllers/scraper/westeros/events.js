@@ -15,7 +15,7 @@ class EventScraper {
 
     async getAll()
     {
-        console.log('scraping westeros events...')
+        console.log('[WesterosEventScraper] '.green + 'scraping westeros events...')
         let events = [];
         let ages = await this.agesScraper.getAllWithEvents();
 

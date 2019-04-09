@@ -21,17 +21,18 @@ let filler = new Filler(wiki, collection, 3);
 mongoose.Promise = global.Promise;
 mongoose.connect(getDbString(config.database), {useNewUrlParser: true}).then(
     (res) => {
-        console.log("Successfully connected to the database.")
+        console.log('[Updater] '.green + "Successfully connected to the database.")
     }
 ).catch((err) => {
-    console.log("Connection to database failed");
+    console.log('[Updater] '.green + "Connection to database failed");
 });
 
 mongoose.connection.on('connected', async () => {
     try {
-        filler.fill();
+        await filler.fill();
         process.exit();
     } catch(e) {
-        console.log(e);
+        console.error('[Updater] '.green + e);
+        process.exit()
     }
 });

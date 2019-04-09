@@ -26,7 +26,7 @@ class BastardScrapper {
                 $('li[class=category-page__member]').each(function (index) {
                     let bastard = {"name": null};
                     bastard.name = $(this).children('a').attr('title');
-                    console.log('scraping bastard: ' + bastard.name);
+                    console.log('[FandomBastardScraper] '.green + 'scraping bastard: ' + bastard.name);
 
                     if(!bastard.name.match(/Category/g)) {
                         bastards.push(bastard);

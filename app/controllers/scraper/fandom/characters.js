@@ -155,7 +155,7 @@ class CharacterScraper {
                 character["slug"] = "Brienne_of_Tarth";
             }
 
-            console.log("scraping", character["name"], "(", (i + 1), "/", finalNames.length, ")");
+            console.log('[FandomCharacterScraper] '.green + "scraping", character["name"], "(", (i + 1), "/", finalNames.length, ")");
 
             data.push(await this.scrape(character["name"], character["slug"]));
         }

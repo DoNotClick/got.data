@@ -1,4 +1,4 @@
-const AssassinStore = require('../../stores/fandom/assassinStore');
+const AssassinStore = require('../../stores/fandom/assassin');
 
 class AssassinController {
     constructor() {

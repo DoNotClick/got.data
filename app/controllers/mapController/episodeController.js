@@ -1,4 +1,4 @@
-const EpisodeStore = require('../../stores/map/episodeStore');
+const EpisodeStore = require('../../stores/map/episode');
 
 class EpisodeController {
     constructor() {

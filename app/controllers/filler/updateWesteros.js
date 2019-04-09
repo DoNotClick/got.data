@@ -1,15 +1,15 @@
-const CharacterFiller = require('./westeros/characters'),
-    CharacterPathFiller = require('./westeros/characterPaths'),
-    CharacterLocationFiller = require('./westeros/characterLocations'),
-    CharacterImageFiller = require('./westeros/characterImages'),
-    CityFiller = require('./westeros/cities'),
-    RegionFiller = require('./westeros/regions'),
-    AgeFiller = require('./westeros/ages'),
-    HouseFiller = require('./westeros/houses'),
-    CultureFiller = require('./westeros/cultures'),
-    ContinentFiller = require('./westeros/contintents'),
+const CharacterFiller = require('./westeros/character'),
+    CharacterPathFiller = require('./westeros/characterPath'),
+    CharacterLocationFiller = require('./westeros/characterLocation'),
+    CharacterImageFiller = require('./westeros/characterImage'),
+    CityFiller = require('./westeros/city'),
+    RegionFiller = require('./westeros/region'),
+    AgeFiller = require('./westeros/age'),
+    HouseFiller = require('./westeros/house'),
+    CultureFiller = require('./westeros/culture'),
+    ContinentFiller = require('./westeros/contintent'),
     RankFiller = require('./westeros/pagerank'),
-    EventFiller = require('./westeros/events');
+    EventFiller = require('./westeros/event');
 
 
 class UpdateWesteros {
@@ -46,9 +46,9 @@ class UpdateWesteros {
     async basicUpdate() {
         const self = this;
 
-        console.log('filling book collections');
+        console.log('[WesterosUpdater] '.green + 'filling book collections');
         let promises = this.collections.map(async(collection) => {
-            console.log('checking ' + collection);
+            console.log('[WesterosUpdater] '.green + 'checking ' + collection);
             try {
                 switch(collection) {
                     case 'westerosages':
@@ -57,7 +57,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.ageFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -70,7 +70,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.houseFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -83,7 +83,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.cityFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -96,7 +96,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.characterFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -109,7 +109,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.characterLocationFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -122,7 +122,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.characterPathFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -135,7 +135,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.rankFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -148,7 +148,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.regionFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -161,7 +161,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.cultureFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -174,7 +174,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.eventFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -187,7 +187,7 @@ class UpdateWesteros {
                                 if(err) throw new Error(err);
 
                                 if(count === 0) {
-                                    console.log("filling " + collection);
+                                    console.log('[WesterosUpdater] '.green + "filling " + collection);
                                     self.continentFiller.fill().then(() => { resolve() });
                                 } else {
                                     resolve();
@@ -195,12 +195,12 @@ class UpdateWesteros {
                             });
                         }));
                     default:
-                        console.error("invalid collection " + collection);
+                        console.error('[WesterosUpdater] '.green + "invalid collection " + collection);
 
                         return new Promise((resolve) => {resolve()});
                 }
             } catch(e) {
-                console.warn('error in fetching data ' + e);
+                console.warn('[WesterosUpdater] '.green + 'error in fetching data ' + e);
 
                 return new Promise((resolve) => {resolve()});
             }
@@ -213,31 +213,37 @@ class UpdateWesteros {
         promises = [];
 
         promises.push(new Promise(resolve => {
-            console.log("checking images");
+            console.log('[WesterosUpdater] '.green + "checking images");
 
-            let fs = require('fs');
-            let imgDir = __dirname + '/../../../misc/images/characters/book/';
+            try
+            {
+                let fs = require('fs');
+                let imgDir = __dirname + '/../../../misc/images/characters/book/';
 
-            fs.readdir(imgDir, (err, files) => {
-                if(err) throw new Error(err);
+                fs.readdir(imgDir, (err, files) => {
+                    if(err) throw new Error(err);
 
-                if(!files || files.length <= 2) {
-                    console.log('downloading show character images');
+                    if(!files || files.length <= 2) {
+                        console.log('[WesterosUpdater] '.green + 'downloading show character images');
 
-                    self.characterImageFiller.fill().then(() => {
+                        self.characterImageFiller.fill().then(() => {
+                            resolve();
+                        });
+                    }
+                    else
+                    {
                         resolve();
-                    });
-                }
-                else
-                {
-                    resolve();
-                }
-            });
+                    }
+                });
+            }
+            catch (e) {
+                console.log(e);
+            }
         }));
 
         await Promise.all(promises);
 
-        console.log('Finished fetching book data.');
+        console.log('[WesterosUpdater] '.green + 'Finished fetching book data.');
     }
 }
 

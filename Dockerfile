@@ -10,8 +10,6 @@ COPY ./cfg /usr/src/app/cfg
 COPY ./data /usr/src/app/data
 COPY ./misc /usr/src/app/misc
 COPY ./scripts /usr/src/app/scripts
-COPY ./test /usr/src/app/test
-COPY ./tmp /usr/src/app/tmp
 
 COPY ./app.js /usr/src/app/
 COPY ./constants.js /usr/src/app/

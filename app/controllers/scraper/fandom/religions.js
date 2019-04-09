@@ -45,13 +45,13 @@ class ReligionScraper {
         {
             let religion = religions[i];
 
-            console.log("scraping", religion["name"], "(", (i + 1), "/", religions.length, ")");
+            console.log('[FandomReligionScraper] '.green + "scraping", religion["name"], "(", (i + 1), "/", religions.length, ")");
 
             try {
                 data.push(await this.scrape(religion["name"], religion["slug"]));
             }
             catch(e) {
-                console.log(e);
+                console.warn('[FandomReligionScraper] '.green + e);
             }
         }
 

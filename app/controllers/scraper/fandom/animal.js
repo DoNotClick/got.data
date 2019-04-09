@@ -120,13 +120,13 @@ class AnimalScrapper {
         let data = [];
 
         for(let i = 0; i < animals.length; i++) {
-            console.log("started scraping ", animals[i]);
+            console.log('[FandomAnimalScraper] '.green + "started scraping ", animals[i]);
 
             try {
                 data.push(await this.scrape(animals[i]));
             }
             catch(e) {
-                console.log(e);
+                console.warn('[FandomAnimalScraper] '.green + e);
             }
         }
 

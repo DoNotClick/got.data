@@ -1,4 +1,4 @@
-const EventStore = require('../../stores/westeros/events');
+const EventStore = require('../../stores/westeros/event');
 
 class EventController {
     constructor() {

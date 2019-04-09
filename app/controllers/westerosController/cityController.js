@@ -1,4 +1,4 @@
-const CityStore = require('../../stores/westeros/cities');
+const CityStore = require('../../stores/westeros/city');
 
 class CityController {
     constructor() {

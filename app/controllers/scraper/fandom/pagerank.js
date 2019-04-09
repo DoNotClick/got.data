@@ -32,7 +32,7 @@ class PageRankScraper {
         {
             await this.scrapePage(this.pending.pop());
 
-            console.log("pending:", this.pending.length, "- visited:", this.visited.length)
+            console.log('[FandomPagerankScraper] '.green + "pending:", this.pending.length, "- visited:", this.visited.length)
         }
 
         return this.ranks;
@@ -47,7 +47,7 @@ class PageRankScraper {
 
         this.visited.push(page);
 
-        console.log("scraping page", page);
+        console.log('[FandomPagerankScraper] '.green + "scraping page", page);
 
         let data;
 

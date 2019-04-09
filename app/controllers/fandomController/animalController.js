@@ -1,4 +1,4 @@
-const AnimalStore = require('../../stores/fandom/animalStore');
+const AnimalStore = require('../../stores/fandom/animal');
 
 class AnimalController {
     constructor() {

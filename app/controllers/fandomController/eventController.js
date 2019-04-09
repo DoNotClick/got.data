@@ -1,6 +1,6 @@
 
 'use strict';
-const EventStore = require('../../stores/fandom/eventStore');
+const EventStore = require('../../stores/fandom/event');
 class EventController {
     constructor() {
         this.eventStore = new EventStore();

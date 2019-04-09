@@ -1,20 +1,22 @@
 require(__dirname + '/' + 'constants');
 
-const config = require(__base + 'cfg/config');
+const config = require('./cfg/config');
 
 const UpdateFandom = require('./app/controllers/filler/updateFandom');
 const UpdateWesteros = require('./app/controllers/filler/updateWesteros');
 const UpdateMap = require('./app/controllers/filler/updateMap');
 
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const uuidv4 = require('uuid/v4');
 
-const express = require('express'),
-    app = express(),
-    port = config.server.port || 3000,
-    mongoose = require('mongoose'),
-    cors = require('cors'),
-    bodyParser = require('body-parser');
-
+require('colors');
+require('console-stamp')(console, {
+    format: ':date(dd.mm.yyyy HH:MM:ss.l).yellow :label(7).white',
+});
+const app = express();
 
 function getDbString(config) { //Create the DB connection string
     let dbConnection = "mongodb://";
@@ -25,7 +27,7 @@ function getDbString(config) { //Create the DB connection string
 }
 
 function routerAuthentication(req, res, next) {
-    console.log('Request incoming: ' + req.url);
+    console.log('[API] '.green + 'Request incoming: ' + req.url);
 
     //Allow all GET requests as these do not modify data and we want users to be able to see that basic stuff
     if (req.method === 'GET') {
@@ -35,7 +37,7 @@ function routerAuthentication(req, res, next) {
     //Otherwise check if we got a token
     let sentToken = req.query.token ? req.query.token : req.body.token;
     if (!sentToken) {
-        console.log('401 - no token sent');
+        console.log('[API] '.green + '401 - no token sent');
         return res.status(401).send({ //Send a nice little message to remind the user that he needs to supply a token
             message: 'Need to send a token',
             code: 401
@@ -43,10 +45,10 @@ function routerAuthentication(req, res, next) {
     }
 
     //Also check if the token is valid or not
-    if (sentToken == accessToken) {
+    if (sentToken === accessToken) {
         return next();
     } else {
-        console.log('401 - wrong token sent');
+        console.log('[API] '.green + '401 - wrong token sent');
         return res.sendStatus(401);
     }
 }
@@ -57,36 +59,34 @@ if (config.server.accessToken) {
     global.accessToken = uuidv4(); //Generate a default token when none is set
 }
 
-console.log('Your requests must contain the following token: ' + accessToken);
-
-
+console.log('[API] '.green + 'Your requests must contain the following token: ' + accessToken);
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 mongoose.connect(getDbString(config.database), {useNewUrlParser: true}).then(
     (res) => {
-        console.log("Successfully connected to the database.")
+        console.log('[API] '.green + "Successfully connected to the database.")
     }
 ).catch((err) => {
-    console.log("Connection to database failed");
+    console.error('[API] '.green + "Connection to database failed");
+    process.exit();
 });
-
 
 mongoose.connection.on('connected', async () => {
     try {
         const db = mongoose.connection.db;
 
-        console.log('MongoDB connection open');
+        console.info('[API] '.green + 'MongoDB connection open');
 
         let updateFandom = new UpdateFandom(db).basicUpdate();
         let updateWesteros = new UpdateWesteros(db).basicUpdate();
         let updateMap = new UpdateMap(db).basicUpdate();
 
-        await Promise.all([updateFandom, updateWesteros]);
+        await Promise.all([updateFandom, updateWesteros, updateMap]);
 
-        console.log("all scraper done")
+        console.info('[Updater] '.green + "all scraper done")
     } catch(e) {
-        console.log(e);
+        console.error('[Updater] '.green + e);
     }
 });
 
@@ -105,9 +105,9 @@ const mapRouter = express.Router();
 showRouter.use(routerAuthentication);
 bookRouter.use(routerAuthentication);
 
-require('./app/routes/fandomRoutes')(app, showRouter);
-require('./app/routes/westerosRoutes')(app, bookRouter);
-require('./app/routes/mapRoutes')(app, mapRouter);
+require('./app/routes/fandom')(app, showRouter);
+require('./app/routes/westeros')(app, bookRouter);
+require('./app/routes/map')(app, mapRouter);
 
 app.use('/api/show', showRouter);
 app.use('/api/book', bookRouter);
@@ -135,10 +135,6 @@ app.get('*', function (req, res) {
     res.redirect('/api');
 });
 
-// app.use(function(req, res) {
-//     res.status(404).send({url: req.originalUrl + ' not found'})
-// });
-
 app.listen(3000);
 
-console.log('RESTful API server started on: ' + port);
+console.log('[API] '.green + 'RESTful API server started on: 3000');

@@ -1,4 +1,4 @@
-const EpisodeStore = require('../../stores/fandom/episodeStore');
+const EpisodeStore = require('../../stores/fandom/episode');
 class EpisodeController {
     constructor() {
         this.epStore = new EpisodeStore();

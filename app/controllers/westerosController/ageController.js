@@ -1,4 +1,4 @@
-const AgeStore = require('../../stores/westeros/ages');
+const AgeStore = require('../../stores/westeros/age');
 
 class AgeController {
     constructor() {

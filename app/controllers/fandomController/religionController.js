@@ -1,5 +1,5 @@
 
-const ReligionStore = require('../../stores/fandom/religionStore');
+const ReligionStore = require('../../stores/fandom/religion');
 class ReligionController {
     constructor() {
         this.relStore = new ReligionStore();

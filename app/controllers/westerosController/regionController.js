@@ -1,4 +1,4 @@
-const RegionStore = require('../../stores/westeros/regions');
+const RegionStore = require('../../stores/westeros/region');
 
 class RegionController {
     constructor() {

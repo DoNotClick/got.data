@@ -214,13 +214,13 @@ class RegionScrapper {
         let data = [];
 
         for (let i = 0; i < regions.length; i++) {
-            console.log("started scraping ", regions[i]);
+            console.log('[FandomRegionScraper] '.green + "started scraping ", regions[i]);
 
             try {
                 data.push(await this.scrape(regions[i]));
             }
             catch(e) {
-                console.log(e);
+                console.warn('[FandomRegionScraper] '.green + e);
             }
         }
 

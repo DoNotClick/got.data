@@ -20,7 +20,7 @@ class PageRankFiller {
     }
 
     async matchToModel(data) {
-        console.log('matching data to DB model...');
+        console.log('[WesterosPagerankFiller] '.green + 'matching data to DB model...');
         let ranks = [];
         Object.keys(data).map((key) => {
             let newRank = new PageRanks();
@@ -33,26 +33,26 @@ class PageRankFiller {
 
     // remove collection
     async clearAll() {
-        console.log('clearing collection...')
+        console.log('[WesterosPagerankFiller] '.green + 'clearing collection...')
         return await PageRanks.deleteMany({}, (err, data) => {
             if (err) {
-                console.warn('Error in removing collection: ' + err);
+                console.warn('[WesterosPagerankFiller] '.green + 'Error in removing collection: ' + err);
             } else {
-                console.log('Collection successfully removed');
+                console.log('[WesterosPagerankFiller] '.green + 'Collection successfully removed');
             }
         });
     }
 
     async insertAll(data) {
         await this.clearAll();
-        console.log('writing to db...');
+        console.log('[WesterosPagerankFiller] '.green + 'writing to db...');
         try {
             return await PageRanks.insertMany(data, (err, docs) => {
                 if (err) {
-                    console.warn('error in saving to db: ' + err);
+                    console.warn('[WesterosPagerankFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 } 
-                console.log(docs.length + ' entries successfully saved to MongoDB!');
+                console.log('[WesterosPagerankFiller] '.green + docs.length + ' entries successfully saved to MongoDB!');
             });
         } catch (e) {
             throw new Error(e);

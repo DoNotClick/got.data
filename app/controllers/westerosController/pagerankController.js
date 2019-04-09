@@ -1,5 +1,5 @@
 
-const PageRankStore = require('../../stores/westeros/pagerankStore');
+const PageRankStore = require('../../stores/westeros/pagerank');
 class PageRankController {
     constructor() {
         this.rankStore = new PageRankStore();

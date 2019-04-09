@@ -1,4 +1,4 @@
-const CharacterStore = require('../../stores/westeros/characters');
+const CharacterStore = require('../../stores/westeros/character');
 class CharacterController {
     constructor() {
         this.charStore = new CharacterStore();

@@ -50,8 +50,6 @@ class EpisodeScraper {
             });
         });
 
-        console.log(names);
-
         return names;
     }
 
@@ -177,7 +175,7 @@ class EpisodeScraper {
 
         let previous = null;
         for(let i = 0; i < episodes.length; i++) {
-            console.log("started scraping ", episodes[i].title);
+            console.log('[FandomEpisodeScraper] '.green + "started scraping ", episodes[i].title);
 
             try {
                 let episode = await this.scrape(episodes[i], previous);
@@ -187,7 +185,7 @@ class EpisodeScraper {
                 previous = episode;
             }
             catch (e) {
-                console.log(e);
+                console.warn('[FandomEpisodeScraper] '.green + e);
             }
         }
 

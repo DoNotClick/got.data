@@ -149,13 +149,13 @@ class CityScrapper {
         let data = [];
 
         for (let i = 0; i < cities.length; i++) {
-            console.log("started scraping ", cities[i]);
+            console.log('[FandomCityScraper] '.green + "started scraping ", cities[i]);
 
             try {
                 data.push(await this.scrape(cities[i]));
             }
             catch(e) {
-                console.log(e);
+                console.warn('[FandomCityScraper] '.green + e);
             }
         }
 

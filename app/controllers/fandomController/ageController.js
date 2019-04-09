@@ -1,6 +1,6 @@
 
 'use strict';
-const AgeStore = require('../../stores/fandom/ageStore');
+const AgeStore = require('../../stores/fandom/age');
 class AgeController {
     constructor() {
         this.ageStore = new AgeStore();
