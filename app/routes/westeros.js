@@ -1,15 +1,15 @@
-const   CharacterController = require('../controllers/westerosController/characterController'),
-        AgeController = require('../controllers/westerosController/ageController'),
-        HouseController = require('../controllers/westerosController/houseController'),
-        CharacterLocationController = require('../controllers/westerosController/characterLocations'),
-        CharacterPathController = require('../controllers/westerosController/characterPaths'),
-        CityController = require('../controllers/westerosController/cityController'),
-        CultureController = require('../controllers/westerosController/cultureController'),
-        RegionController = require('../controllers/westerosController/regionController'),
-        ContinentController = require('../controllers/westerosController/continentController'),
-        EventController = require('../controllers/westerosController/eventController'),
-        PageRankController = require('../controllers/westerosController/pagerankController'),
-        BayeseanAttributeController = require('../controllers/westerosController/bayeseanController');
+const CharacterController = require('../controllers/westerosController/characterController');
+const AgeController = require('../controllers/westerosController/ageController');
+const HouseController = require('../controllers/westerosController/houseController');
+const CharacterLocationController = require('../controllers/westerosController/characterLocations');
+const CharacterPathController = require('../controllers/westerosController/characterPaths');
+const CityController = require('../controllers/westerosController/cityController');
+const CultureController = require('../controllers/westerosController/cultureController');
+const RegionController = require('../controllers/westerosController/regionController');
+const ContinentController = require('../controllers/westerosController/continentController');
+const EventController = require('../controllers/westerosController/eventController');
+const PageRankController = require('../controllers/westerosController/pagerankController');
+const BayeseanAttributeController = require('../controllers/westerosController/bayeseanController');
 
 module.exports = function(app, router) {
 

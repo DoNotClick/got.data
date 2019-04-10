@@ -1,11 +1,12 @@
-const mongoose = require('mongoose'),
-      Houses = require('../../../models/fandom/house'),
-      HouseScrapper = require('../../scraper/fandom/house');
+const mongoose = require('mongoose');
+const Houses = require('../../../models/fandom/house');
+const HouseScrapper = require('../../scraper/fandom/house');
 
 
 class HouseFandomFiller {
-    constructor() {
+    constructor(policy) {
         this.scraper = new HouseScrapper();
+        this.policy = policy;
     }
 
     async fill() {
@@ -16,8 +17,6 @@ class HouseFandomFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
-
-            // console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -52,6 +51,11 @@ class HouseFandomFiller {
     }
 
     async insertToDb(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Houses.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomHouseFiller] '.green + 'error in saving to db: ' + err);

@@ -5,7 +5,7 @@ const rp = require('request-promise');
 class TownScrapper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -18,16 +18,15 @@ class TownScrapper {
             }
         };
 
-        let towns = []
+        let towns = [];
         await rp(options)
             .then(function ($) {
                 // Process html like you would with jQuery...
 
                 $('li[class=category-page__member]').each(function (index) {
                     let town = {"title": null, "reference": null};
-                    town.title = $(this).children('a').attr('title')
-                    town.reference = $(this).children('a').attr('href')
-                    // console.log(town.title);
+                    town.title = $(this).children('a').attr('title');
+                    town.reference = $(this).children('a').attr('href');
 
                     if(!town.title.match(/Category/g)) {
                         towns.push(town);
@@ -38,8 +37,6 @@ class TownScrapper {
             })
             .catch(function (err) {
             });
-
-        // console.log(towns);
 
         return towns;
     }

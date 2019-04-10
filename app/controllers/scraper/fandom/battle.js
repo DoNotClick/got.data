@@ -5,7 +5,7 @@ const rp = require('request-promise');
 class BattleScrapper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -27,7 +27,6 @@ class BattleScrapper {
                     let battle = {"title": null, "reference": null};
                     battle.title = $(this).children('a').attr('title')
                     battle.reference = $(this).children('a').attr('href')
-                    // console.log(battle.title);
 
                     if(!battle.title.match(/Category/g)) {
                         battles.push(battle);
@@ -38,8 +37,6 @@ class BattleScrapper {
             })
             .catch(function (err) {
             });
-
-        // console.log(battles);
 
         return battles;
 
@@ -205,9 +202,6 @@ class BattleScrapper {
                 }
             });
         }
-
-        // console.log(battleItem);
-
 
         return battleItem;
     }

@@ -1,32 +1,31 @@
-const CharacterFiller = require('./westeros/character'),
-    CharacterPathFiller = require('./westeros/characterPath'),
-    CharacterLocationFiller = require('./westeros/characterLocation'),
-    CharacterImageFiller = require('./westeros/characterImage'),
-    CityFiller = require('./westeros/city'),
-    RegionFiller = require('./westeros/region'),
-    AgeFiller = require('./westeros/age'),
-    HouseFiller = require('./westeros/house'),
-    CultureFiller = require('./westeros/culture'),
-    ContinentFiller = require('./westeros/contintent'),
-    RankFiller = require('./westeros/pagerank'),
-    EventFiller = require('./westeros/event');
-
+const CharacterFiller = require('./westeros/character');
+const CharacterPathFiller = require('./westeros/characterPath');
+const CharacterLocationFiller = require('./westeros/characterLocation');
+const CharacterImageFiller = require('./westeros/characterImage');
+const CityFiller = require('./westeros/city');
+const RegionFiller = require('./westeros/region');
+const AgeFiller = require('./westeros/age');
+const HouseFiller = require('./westeros/house');
+const CultureFiller = require('./westeros/culture');
+const ContinentFiller = require('./westeros/contintent');
+const RankFiller = require('./westeros/pagerank');
+const EventFiller = require('./westeros/event');
 
 class UpdateWesteros {
     constructor(db) {
         this.db = db;
-        this.characterFiller = new CharacterFiller(1);
-        this.characterPathFiller = new CharacterPathFiller(1);
-        this.characterLocationFiller = new CharacterLocationFiller(1);
-        this.characterImageFiller = new CharacterImageFiller(1);
-        this.cityFiller = new CityFiller(1);
-        this.regionFiller = new RegionFiller(1);
-        this.ageFiller = new AgeFiller(1);
-        this.houseFiller = new HouseFiller(1);
-        this.cultureFiller = new CultureFiller(1);
-        this.continentFiller = new ContinentFiller(1);
-        this.eventFiller = new EventFiller(1);
-        this.rankFiller = new RankFiller(1);
+        this.characterFiller = new CharacterFiller(FILLER_POLICY_REFILL);
+        this.characterPathFiller = new CharacterPathFiller(FILLER_POLICY_REFILL);
+        this.characterLocationFiller = new CharacterLocationFiller(FILLER_POLICY_REFILL);
+        this.characterImageFiller = new CharacterImageFiller(FILLER_POLICY_REFILL);
+        this.cityFiller = new CityFiller(FILLER_POLICY_REFILL);
+        this.regionFiller = new RegionFiller(FILLER_POLICY_REFILL);
+        this.ageFiller = new AgeFiller(FILLER_POLICY_REFILL);
+        this.houseFiller = new HouseFiller(FILLER_POLICY_REFILL);
+        this.cultureFiller = new CultureFiller(FILLER_POLICY_REFILL);
+        this.continentFiller = new ContinentFiller(FILLER_POLICY_REFILL);
+        this.eventFiller = new EventFiller(FILLER_POLICY_REFILL);
+        this.rankFiller = new RankFiller(FILLER_POLICY_REFILL);
 
         this.collections = [
             'westerosages',

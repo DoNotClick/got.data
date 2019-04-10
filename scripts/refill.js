@@ -1,9 +1,8 @@
 require(__dirname + '/../' + 'constants');
 
-const config = require(__base + 'cfg/config');
+const config = require('../cfg/config');
 const mongoose = require('mongoose');
 const Filler = require("../app/controllers/filler/filler");
-
 
 const collection = process.env.npm_config_collection;
 const wiki = process.env.npm_config_wiki;

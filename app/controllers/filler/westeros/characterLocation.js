@@ -1,14 +1,10 @@
-const mongoose = require('mongoose'),
-    CharacterLocations = require('../../../models/westeros/characterLocation'),
-    CharacterLocationScraper = require('../../../controllers/scraper/westeros/characterLocations');
+const mongoose = require('mongoose');
+const CharacterLocations = require('../../../models/westeros/characterLocation');
+const CharacterLocationScraper = require('../../scraper/westeros/characterLocation');
 
 
 class CharacterLocationFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.scraper = new CharacterLocationScraper();
         this.policy = policy;
     }
@@ -61,7 +57,7 @@ class CharacterLocationFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === this.POLICY_REFILL)
+        if(this.policy === FILLER_POLICY_REFILL)
         {
             await this.clearAll();
         }

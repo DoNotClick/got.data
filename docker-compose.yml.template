@@ -1,43 +1,37 @@
 version: '2'
 services:
     web-app:
-        container_name: got.data
-        build:
-            context: .
-            dockerfile: Dockerfile
+        container_name: got_webservice
+        image: sacdallago/api.got.show
         depends_on:
             - database
-        links:
-            - mongodb
-        environment:
-            - databaseuri=<DATABASEURI>
-            - databasecollection=<DBCOLLECTION>
-            - databaseuser=<DB-USER>
-            - databasepassword=<DB-USER-PASSWORD>
-            - accesstoken=<ACCESS-TOKEN>
-            - VIRTUAL_HOST=<VIRTUAL-HOST-NAME>
-    database:
-        container_name: mongodb
-        image: mongo:latest
-        ports:
-            - 27017:27017
-        environment:
-            - MONGO_DATA_DIR=/data/db
-            - MONGO_LOG_DIR=/dev/null
         volumes:
-            - ./data/db:/data/db
-        command: mongod --smallfiles --logpath=/dev/null # --quiet
-    nginx-proxy:
-      image: jwilder/nginx-proxy
-      container_name: nginx-proxy
-      ports:
-        - "80:80"
-        - "443:443"
-      volumes:
-        - /var/run/docker.sock:/tmp/docker.sock:ro
-        - /usr/share/nginx/html
-        - /etc/nginx/vhost.d
-        - certs-volume:/etc/nginx/certs:ro
+            - static_data:/usr/src/app/misc
+        links:
+            - database
+        environment:
+            - databaseuri=database
+            - databasecollection=got
+            - databaseuser=got
+            - databasepassword=got
+            - accesstoken=GOT2019ACCESStoken
+        ports:
+            - 3032:3000
+    database:
+        container_name: got_mongo
+        image: mongo
+        restart: always
+        volumes:
+            - mongodb:/data/db
+            - mongodb_config:/data/configdb
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=got
+            - MONGO_INITDB_ROOT_PASSWORD=got
+            - MONGO_INITDB_DATABASE=got
+            - MONGODB_USERNAME=got
+            - MONGODB_PASSWORD=got
+            - MONGODB_DATABASE=got
 volumes:
-  certs-volume:
-  db-data:
+    mongodb:
+    mongodb_config:
+    static_data:

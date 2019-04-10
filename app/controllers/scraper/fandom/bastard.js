@@ -5,7 +5,7 @@ const rp = require('request-promise');
 class BastardScrapper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 

@@ -1,11 +1,11 @@
-const mongoose = require('mongoose'),
-      Religions = require('../../../models/fandom/religion'),
-      ReligionScrapper = require('../../scraper/fandom/religions');
-
+const mongoose = require('mongoose');
+const Religions = require('../../../models/fandom/religion');
+const ReligionScrapper = require('../../scraper/fandom/religion');
 
 class ReligionFandomFiller {
-    constructor() {
+    constructor(policy) {
         this.scraper = new ReligionScrapper();
+        this.policy = policy;
     }
 
     async fill() {
@@ -55,6 +55,11 @@ class ReligionFandomFiller {
     }
 
     async insertToDb(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Religions.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomReligionFiller] '.green + 'error in saving to db: ' + err);

@@ -7,7 +7,7 @@ class CharacterLocationController {
 
     async getAll(req, res) {
         let result = await this.characterLocationStore.getAll();
-        if (result.success === 1) {
+        if (result.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send({"message": "Success", "data": result.data});
         } else {
             res.status(404).send({"message": result.message});
@@ -16,8 +16,8 @@ class CharacterLocationController {
 
     async getByName(req, res) {
         let result = await this.characterLocationStore.getByName(req.params.name);
-        if (result.success === 1) {
-            res.status(200).send({"message": "Success", "data": result.data});
+        if (result.success === STORE_RESPONSE_SUCCESS) {
+            res.status(200).send({"message": "Success", "data": [result.data]});
         } else {
             res.status(404).send({"message": result.message});
         }
@@ -25,8 +25,8 @@ class CharacterLocationController {
 
     async getBySlug(req, res) {
         let result = await this.characterLocationStore.getBySlug(req.params.name);
-        if (result.success === 1) {
-            res.status(200).send({"message": "Success", "data": result.data});
+        if (result.success === STORE_RESPONSE_SUCCESS) {
+            res.status(200).send({"message": "Success", "data": [result.data]});
         } else {
             res.status(404).send({"message": result.message});
         }
@@ -34,7 +34,7 @@ class CharacterLocationController {
 
     async getByLocation(req, res) {
         let result = await this.characterLocationStore.getByLocation(req.params.name);
-        if (result.success === 1) {
+        if (result.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send({"message": "Success", "data": result.data});
         } else {
             res.status(404).send({"message": result.message});

@@ -1,13 +1,9 @@
-const mongoose = require('mongoose'),
-    Continents = require('../../../models/westeros/continent'),
-    jsonfile = require('jsonfile');
+const mongoose = require('mongoose');
+const Continents = require('../../../models/westeros/continent');
+const jsonfile = require('jsonfile');
 
 class ContinentsFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.policy = policy;
     }
     
@@ -75,7 +71,7 @@ class ContinentsFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === this.POLICY_REFILL)
+        if(this.policy === FILLER_POLICY_REFILL)
         {
             await this.clearAll();
         }

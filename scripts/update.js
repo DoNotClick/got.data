@@ -1,6 +1,6 @@
 require(__dirname + '/../' + 'constants');
 
-const config = require(__base + 'cfg/config');
+const config = require('../cfg/config');
 const mongoose = require('mongoose');
 const Filler = require("../app/controllers/filler/filler");
 

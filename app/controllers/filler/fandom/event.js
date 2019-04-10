@@ -1,11 +1,12 @@
-const mongoose = require('mongoose'),
-      Events = require('../../../models/fandom/event'),
-      EventScraper = require('../../scraper/fandom/event');
+const mongoose = require('mongoose');
+const Events = require('../../../models/fandom/event');
+const EventScraper = require('../../scraper/fandom/event');
 
 
 class EventFandomFiller {
-    constructor() {
+    constructor(policy) {
         this.scraper = new EventScraper();
+        this.policy = policy;
     }
 
     async fill() {
@@ -53,6 +54,11 @@ class EventFandomFiller {
     }
 
     async insertToDb(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Events.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomEventFiller] '.green + 'error in saving to db: ' + err);

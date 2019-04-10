@@ -1,4 +1,3 @@
-
 const fandomTranslation = {
     "age": "ageFandom",
     "animal": "animalFandom",

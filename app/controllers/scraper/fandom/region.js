@@ -5,7 +5,7 @@ const rp = require('request-promise');
 class RegionScrapper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -27,7 +27,6 @@ class RegionScrapper {
                     let region = {"title": null, "reference": null};
                     region.title = $(this).children('a').attr('title')
                     region.reference = $(this).children('a').attr('href')
-                    // console.log(region.title);
 
                     if (!region.title.match(/Category/g)) {
                         regions.push(region);
@@ -38,8 +37,6 @@ class RegionScrapper {
             })
             .catch(function (err) {
             });
-
-        // console.log(regions);
 
         return regions;
 

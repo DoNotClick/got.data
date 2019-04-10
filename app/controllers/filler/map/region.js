@@ -1,13 +1,9 @@
-const mongoose = require('mongoose'),
-    Region = require('../../../models/map/region'),
-    jsonfile = require('jsonfile');
+const mongoose = require('mongoose');
+const Region = require('../../../models/map/region');
+const jsonfile = require('jsonfile');
 
 class RegionFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.policy = policy;
     }
 
@@ -70,7 +66,7 @@ class RegionFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === this.POLICY_REFILL)
+        if(this.policy === FILLER_POLICY_REFILL)
         {
             await this.clearAll();
         }

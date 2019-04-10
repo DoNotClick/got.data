@@ -1,18 +1,11 @@
-const mongoose = require('mongoose'),
-      Characters = require('../../../models/fandom/character'),
-      CharacterScraper = require('../../../controllers/scraper/fandom/characters'),
-      PageRankScraper = require('../../../controllers/scraper/fandom/pagerank');
-
+const mongoose = require('mongoose');
+const Characters = require('../../../models/fandom/character');
+const CharacterScraper = require('../../scraper/fandom/character');
 
 class CharacterFandomFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.policy = policy;
         this.scraper = new CharacterScraper();
-        // this.pageRankScraper = new PageRankScraper();
     }
 
     async fill() {
@@ -60,12 +53,12 @@ class CharacterFandomFiller {
 
     async insertAll(data) {
         try {
-            if(this.policy === this.POLICY_REFILL) {
+            if(this.policy === FILLER_POLICY_REFILL) {
                 console.log('[FandomCharacterFiller] '.green + 'starting whole refill')
                 await this.clearAll();
                 await this.fillCollection(data);
             }
-            else if (this.policy === this.POLICY_UPDATE) {
+            else if (this.policy === FILLER_POLICY_UPDATE) {
                 console.log('[FandomCharacterFiller] '.green + 'starting update');
                 await this.updateCollection(data);
             } else {

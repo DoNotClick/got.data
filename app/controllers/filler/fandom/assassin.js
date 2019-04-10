@@ -1,11 +1,11 @@
-const mongoose = require('mongoose'),
-      Assassins = require('../../../models/fandom/assassin'),
-      Characters = require('../../../models/fandom/character'),
-      AssassinsScraper = require('../../scraper/fandom/assassin');
+const mongoose = require('mongoose');
+const Assassins = require('../../../models/fandom/assassin');
+const AssassinsScraper = require('../../scraper/fandom/assassin');
 
 
 class AssassinsFandomFiller {
-    constructor() {
+    constructor(policy) {
+        this.policy = policy;
         this.scraper = new AssassinsScraper();
     }
 
@@ -17,8 +17,6 @@ class AssassinsFandomFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
-
-            // console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -54,6 +52,11 @@ class AssassinsFandomFiller {
     }
 
     async insertToDb(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Assassins.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomAssassinFiller] '.green + 'error in saving to db: ' + err);

@@ -1,14 +1,10 @@
-const mongoose = require('mongoose'),
-    Events = require('../../../models/westeros/event'),
-    EventScraper = require('../../../controllers/scraper/westeros/events');
+const mongoose = require('mongoose');
+const Events = require('../../../models/westeros/event');
+const EventScraper = require('../../scraper/westeros/event');
 
 
 class EventsFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.scraper = new EventScraper();
         this.policy = policy;
     }
@@ -74,7 +70,7 @@ class EventsFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === this.POLICY_REFILL)
+        if(this.policy === FILLER_POLICY_REFILL)
         {
             await this.clearAll();
         }

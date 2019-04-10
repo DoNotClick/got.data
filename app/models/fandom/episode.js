@@ -11,7 +11,7 @@ const EpisodeFandomSchema = new Schema({
     viewers         : Number,
 
     runtime         : Number,
-    written_by      : String,
+    written_by      : [String],
     directed_by     : String,
     preview_text    : String,
 

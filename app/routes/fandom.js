@@ -1,23 +1,21 @@
-const   CharacterController = require('../controllers/fandomController/characterController'),
-        AgeController = require('../controllers/fandomController/ageController'),
-        HouseController = require('../controllers/fandomController/houseController'),
-        ReligionController = require('../controllers/fandomController/religionController'),
-        EpisodeController = require('../controllers/fandomController/episodeController'),
-        PageRankController = require('../controllers/fandomController/pagerankController'),
-        AnimalController = require('../controllers/fandomController/animalController'),
-        AssassinController = require('../controllers/fandomController/assassinController'),
-        BastardController = require('../controllers/fandomController/bastardController'),
-        BattleController = require ('../controllers/fandomController/battleController'),
-        CastleController = require('../controllers/fandomController/castleController'),
-        CityController = require('../controllers/fandomController/cityController'),
-        RegionController = require('../controllers/fandomController/regionController'),
-        TownController = require('../controllers/fandomController/townController'),
-        EventController = require('../controllers/fandomController/eventController'),
-        BayeseanAttributeController = require('../controllers/fandomController/bayeseanController');
-
+const CharacterController = require('../controllers/fandomController/characterController');
+const AgeController = require('../controllers/fandomController/ageController');
+const HouseController = require('../controllers/fandomController/houseController');
+const ReligionController = require('../controllers/fandomController/religionController');
+const EpisodeController = require('../controllers/fandomController/episodeController');
+const PageRankController = require('../controllers/fandomController/pagerankController');
+const AnimalController = require('../controllers/fandomController/animalController');
+const AssassinController = require('../controllers/fandomController/assassinController');
+const BastardController = require('../controllers/fandomController/bastardController');
+const BattleController = require ('../controllers/fandomController/battleController');
+const CastleController = require('../controllers/fandomController/castleController');
+const CityController = require('../controllers/fandomController/cityController');
+const RegionController = require('../controllers/fandomController/regionController');
+const TownController = require('../controllers/fandomController/townController');
+const EventController = require('../controllers/fandomController/eventController');
+const BayeseanAttributeController = require('../controllers/fandomController/bayeseanController');
 
 module.exports = function(app, router) {
-
     const ageController = new AgeController();
     router.get('/ages', ageController.getAll.bind(ageController));
     router.get('/ages/:name', ageController.getByName.bind(ageController));

@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 class CultureScraper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://awoiaf.westeros.org/api.php'
+            apiUrl: WESTEROS_API_URL
         });
     }
 

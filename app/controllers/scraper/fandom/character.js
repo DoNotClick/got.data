@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 class CharacterScraper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -30,7 +30,7 @@ class CharacterScraper {
 
             $this.find("li").each(function () {
                 let parts = $(this).html().split(" as ");
-                let info = {"character": {"name": null, "wiki": null}, "actor": {"name": null, "wiki": null}};
+                let info = {"character": {"name": null, "slug": null}, "actor": {"name": null, "slug": null}};
 
                 if(parts.length < 2)
                 {
@@ -51,114 +51,140 @@ class CharacterScraper {
 
         });
 
+        names = this.fixListNameAnomalies(names);
+
+        names = names.filter(function(item, pos) {
+            for(let i = 0; i < names.length; i++) {
+                if(i === pos) {
+                    break;
+                }
+
+                if(names[i]["character"]["slug"] === item["character"]["slug"])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        });
 
         return names;
     }
 
-    async fixNameAnomalies(names) {
+    fixSingleNameAnomalies(name) {
+        if(name === "Brienne") {
+            return "Brienne of Tarth";
+        }
 
+        if(name === "Catelyn Tully") {
+            return "Catelyn Stark";
+        }
+
+        return name;
+    }
+
+    fixListNameAnomalies(names) {
         for(let i = 0; i < names.length; i++)
         {
-            let character = names[i]["character"];
-
-            if(character["name"] == "Brienne") {
-                character["slug"] = "Brienne_of_Tarth";
+            if(names[i]["character"]["name"] === "Brienne") {
+                names[i]["character"]["name"] = "Brienne of Tarth";
+                names[i]["character"]["slug"] = "Brienne_of_Tarth";
             }
 
-            if(character["name"] == "Smalljon Umber") {
-                character["slug"] = "Smalljon_Umber";
+            if(names[i]["character"]["name"] === "Smalljon Umber") {
+                names[i]["character"]["slug"] = "Smalljon_Umber";
             }
 
-            if(character["name"] == "Ramsay Snow") {
-                character["slug"] = "Ramsay_Bolton";
+            if(names[i]["character"]["name"] === "Ramsay Snow") {
+                names[i]["character"]["slug"] = "Ramsay_Bolton";
             }
 
-            if(character["name"] == "Tickler") {
-                character["slug"] = "The_Tickler";
+            if(names[i]["character"]["name"] === "Tickler") {
+                names[i]["character"]["slug"] = "The_Tickler";
             }
 
-            if(character["name"] == "Olenna Redwyne") {
-                character["slug"] = "Olenna_Tyrell";
+            if(names[i]["character"]["name"] === "Olenna Redwyne") {
+                names[i]["character"]["slug"] = "Olenna_Tyrell";
             }
 
-            if(character["name"] == "Joyeuse Erenford") {
-                character["slug"] = "Joyeuse_Frey";
+            if(names[i]["character"]["name"] === "Joyeuse Erenford") {
+                names[i]["character"]["slug"] = "Joyeuse_Frey";
             }
 
-            if(character["name"] == "Black Walder Frey") {
-                character["slug"] = "Walder_Rivers";
+            if(names[i]["character"]["name"] === "Black Walder Frey") {
+                names[i]["character"]["slug"] = "Walder_Rivers";
             }
 
-            if(character["name"] == "Fat Walda Frey") {
-                character["slug"] = "Walda_Bolton";
+            if(names[i]["character"]["name"] === "Fat Walda Frey") {
+                names[i]["character"]["slug"] = "Walda_Bolton";
             }
 
-            if(character["name"] == "Talisa Maegyr") {
-                character["slug"] = "Talisa_Stark";
+            if(names[i]["character"]["name"] === "Talisa Maegyr") {
+                names[i]["character"]["slug"] = "Talisa_Stark";
             }
 
-            if(character["name"] == "Lem Lemoncloak") {
-                character["slug"] = "Lem";
+            if(names[i]["character"]["name"] === "Lem Lemoncloak") {
+                names[i]["character"]["slug"] = "Lem";
             }
 
-            if(character["name"] == "Lommy Greenhands") {
-                character["slug"] = "Lommy";
+            if(names[i]["character"]["name"] === "Lommy Greenhands") {
+                names[i]["character"]["slug"] = "Lommy";
             }
 
-            if(character["name"] == "Archmaester") {
-                character["slug"] = "Archmaester_(Eastwatch)";
+            if(names[i]["character"]["name"] === "Archmaester") {
+                names[i]["character"]["slug"] = "Archmaester_(Eastwatch)";
             }
 
-            if(character["name"] == "Qhorin Halfhand") {
-                character["slug"] = "Qhorin";
+            if(names[i]["character"]["name"] === "Qhorin Halfhand") {
+                names[i]["character"]["slug"] = "Qhorin";
             }
 
-            if(character["name"] == "Karl") {
-                character["slug"] = "Karl_Tanner";
+            if(names[i]["character"]["name"] === "Karl") {
+                names[i]["character"]["slug"] = "Karl_Tanner";
             }
 
-            if(character["name"] == "Tormund Giantsbane") {
-                character["slug"] = "Tormund";
+            if(names[i]["character"]["name"] === "Tormund Giantsbane") {
+                names[i]["character"]["slug"] = "Tormund";
             }
 
-            if(character["name"] == "Night's King") {
-                character["slug"] = "Night_King";
+            if(names[i]["character"]["name"] === "Night's King") {
+                names[i]["character"]["slug"] = "Night_King";
             }
 
-            if(character["name"] == "Khal Drogo") {
-                character["slug"] = "Drogo";
+            if(names[i]["character"]["name"] === "Khal Drogo") {
+                names[i]["character"]["slug"] = "Drogo";
             }
 
-            if(character["name"] == "The Waif") {
-                character["slug"] = "Waif";
+            if(names[i]["character"]["name"] === "The Waif") {
+                names[i]["character"]["slug"] = "Waif";
             }
-
-
         }
 
         return names;
     }
 
     async scrapeAll() {
-        var names = await this.getAllNames();
-        let finalNames = await this.fixNameAnomalies(names);
-
+        let names = await this.getAllNames();
         let data = [];
 
-        for(let i = 0; i < finalNames.length; i++)
+        for(let i = 0; i < names.length; i++)
         {
-            let character = finalNames[i]["character"];
+            let character = names[i]["character"];
 
 
 
-            if(character["name"] == "Brienne") {
-                character["slug"] = "Brienne_of_Tarth";
+            try {
+                data.push(await this.scrape(character["name"], character["slug"]));
             }
+            catch(e) {
+                if("" + e + "" === "Error: invalidjson: No valid JSON response") {
+                    i -= 1;
+                }
 
-            console.log('[FandomCharacterScraper] '.green + "scraping", character["name"], "(", (i + 1), "/", finalNames.length, ")");
-
-            data.push(await this.scrape(character["name"], character["slug"]));
+                console.log('[FandomCharacterScraper] '.green + e);
+            }
         }
+
         return data;
     }
 
@@ -169,14 +195,10 @@ class CharacterScraper {
             page: page
         });
 
-
-
         const $ = cheerio.load(data["parse"]["text"]["*"]);
 
 
         let result = {};
-
-        // console.log("Scrape for" + name);
 
         result.name = name;
         result.slug = page;
@@ -184,7 +206,6 @@ class CharacterScraper {
         result.image = $(".pi-image-thumbnail").attr("src");
 
         var infobox = $(".portable-infobox");
-
 
         let genderCounter = $('p').slice(0,5).text();
 
@@ -201,9 +222,8 @@ class CharacterScraper {
             result.gender = "female";
         }
 
-
         // scrape appearance
-        result.appearances = []
+        result.appearances = [];
 
         var sliceEp = false;
         var lastEp = $('div[data-source=DeathEp]').find(".pi-data-value").text().replace(/\"/g, "").trim()
@@ -331,7 +351,7 @@ class CharacterScraper {
                 mother = mother.match(/title="(.*?)"/g);
 
                 if(mother) {
-                    result.mother = mother[0].replace(/title=/g,'').replace(/"/g,'')
+                    result.mother = this.fixSingleNameAnomalies(mother[0].replace(/title=/g,'').replace(/"/g,''));
                 }
 
                 
@@ -354,7 +374,7 @@ class CharacterScraper {
                 father = father.match(/title="(.*?)"/g);
 
                 if(father) {
-                    result.father = father[0].replace(/title=/g,'').replace(/"/g,'')
+                    result.father = this.fixSingleNameAnomalies(father[0].replace(/title=/g,'').replace(/"/g,''))
                 }
 
                 
@@ -477,7 +497,7 @@ class CharacterScraper {
 
         //First seen
         if($('div[data-source=First]') != null) {
-            result.first_seen = $('div[data-source=First]').find(".pi-data-value").text()
+            result.first_seen = $('div[data-source=First]').find(".pi-data-value").text().replace('"', '').replace("'", '')
         }
 
 

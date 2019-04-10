@@ -7,7 +7,7 @@ class EpisodeController {
 
     async getAll(req, res) {
         let result = await this.episodeStore.getAll();
-        if (result.success === 1) {
+        if (result.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send({"message": "Success", "data": result.data});
         } else {
             res.status(404).send({"message": result.message});
@@ -16,7 +16,7 @@ class EpisodeController {
 
     async getByName(req, res) {
         let result = await this.episodeStore.getByName(req.params.name);
-        if (result.success === 1) {
+        if (result.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send({"message": "Success", "data": result.data});
         } else {
             res.status(404).send({"message": result.message});
@@ -25,7 +25,7 @@ class EpisodeController {
 
     async getById(req, res) {
         let result = await this.episodeStore.getById(req.params.name);
-        if (result.success === 1) {
+        if (result.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send({"message": "Success", "data": result.data});
         } else {
             res.status(404).send({"message": result.message});
@@ -34,7 +34,7 @@ class EpisodeController {
 
     async getEpisodesByCharacter(req, res) {
         let result = await this.episodeStore.getEpisodesByCharacter(req.params.name);
-        if (result.success === 1) {
+        if (result.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send({"message": "Success", "data": result.data});
         } else {
             res.status(404).send({"message": result.message});

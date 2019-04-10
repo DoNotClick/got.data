@@ -5,7 +5,7 @@ class CharacterScraper {
     constructor()
     {
         this.bot = new MWBot({
-            apiUrl: 'https://awoiaf.westeros.org/api.php'
+            apiUrl: WESTEROS_API_URL
         });
     }
 
@@ -30,14 +30,15 @@ class CharacterScraper {
         allLis.each(function() {
             name = $(this).find('a').first().attr("title").replace(/_/g,' ');
             if(name.indexOf('House ') < 0) {
-                // console.log(name);
                 characters.push(decodeURIComponent(name));
             }
         });
 
         console.log('[WesterosCharacterScraper] '.green + "All character names loaded");
 
-        return characters;
+        return characters.filter(function(item, pos) {
+            return characters.indexOf(item) === pos;
+        });
     }
 
     async getAll()
@@ -49,10 +50,17 @@ class CharacterScraper {
 
         for(let i = 0; i < characters.length; i++)
         {
+            console.log('[WesterosCharacterScraper] '.green + "bulk scrape ( " + (result.length + 1) + " / " + characters.length + " )");
+
             try {
                 result.push(await this.get(characters[i]));
             }
             catch (e) {
+                if("" + e + "" === "Error: invalidjson: No valid JSON response")
+                {
+                    i -= 1;
+                }
+
                 console.warn('[WesterosCharacterScraper] '.green + e);
             }
         }

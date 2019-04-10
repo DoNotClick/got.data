@@ -4,19 +4,10 @@ const CharacterFandom = require('../../../models/fandom/character');
 
 class CharacterImageFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.policy = policy;
     }
 
     async fill() {
-        /*if(this.POLICY_REFILL === 1)
-        {
-            await this.clearAll();
-        }*/
-
         let data = await CharacterFandom.find({}, (err) => {
             if (err) throw new Error(err);
         });
@@ -39,31 +30,9 @@ class CharacterImageFiller {
         }
     }
 
-    // remove collection
+    // clear not necessary since images will be overwritten
     async clearAll() {
-        return new Promise(function (resolve) {
-            const fs = require('fs');
-            const path = require('path');
-
-            const directory = __dirname + '/../../../../misc/images/characters/show/';
-
-            fs.readdir(directory, (err, files) => {
-                if (err) throw err;
-
-                for (const file of files) {
-                    if(file.search("jpg") === -1 && file.search("png") === -1)
-                    {
-                        continue;
-                    }
-
-                    fs.unlink(path.join(directory, file), err => {
-                        if (err) throw err;
-
-                        resolve(true);
-                    });
-                }
-            });
-        });
+        return;
     }
 
     async download(slug, image) {

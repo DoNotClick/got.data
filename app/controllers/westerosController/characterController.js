@@ -1,4 +1,5 @@
 const CharacterStore = require('../../stores/westeros/character');
+
 class CharacterController {
     constructor() {
         this.charStore = new CharacterStore();
@@ -6,7 +7,7 @@ class CharacterController {
 
     async getAll(req, res) {
         let characters = await this.charStore.getAll();
-        if (characters.success === 1) {
+        if (characters.success === STORE_RESPONSE_SUCCESS) {
             return res.status(200).send(characters.data);
         } else {
             return res.status(404).send(characters.message);
@@ -15,7 +16,7 @@ class CharacterController {
     
     async getByName(req, res) {
         let characters = await this.charStore.getByName(req.params.name);
-        if (characters.success === 1) {
+        if (characters.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(characters.data);
         } else {
             res.status(404).send(characters.message);
@@ -24,7 +25,7 @@ class CharacterController {
 
     async getBySlug(req, res) {
         let characters = await this.charStore.getBySlug(req.params.slug);
-        if (characters.success === 1) {
+        if (characters.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(characters.data);
         } else {
             res.status(404).send(characters.message);
@@ -33,7 +34,7 @@ class CharacterController {
 
     async getByHouse(req, res) {
         let characters = await this.charStore.getByHouse(req.params.house);
-        if (characters.success === 1) {
+        if (characters.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(characters.data);
         } else {
             res.status(404).send(characters.message);
@@ -46,7 +47,7 @@ class CharacterController {
         let longevity = req.params.longevity ? req.params.longevity : req.body.longevity;
         let longevityStart = req.params.longevityStart ? req.params.longevityStart : req.body.longevityStart;
         let character = await this.charStore.updateGeneral(slug, plod, longevity, longevityStart);
-        if (character.success === 1) {
+        if (character.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(character.message);
         } else {
             res.status(404).send(character.message);
@@ -59,7 +60,7 @@ class CharacterController {
         let longevity = req.params.longevity ? req.params.longevity : req.body.longevity;
         let longevityStart = req.params.longevityStart ? req.params.longevityStart : req.body.longevityStart;
         let character = await this.charStore.updateGroupB(slug, plod, longevity, longevityStart);
-        if (character.success === 1) {
+        if (character.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(character.message);
         } else {
             res.status(404).send(character.message);
@@ -72,7 +73,7 @@ class CharacterController {
         let longevity = req.params.longevity ? req.params.longevity : req.body.longevity;
         let longevityStart = req.params.longevityStart ? req.params.longevityStart : req.body.longevityStart;
         let character = await this.charStore.updateGroupC(slug, plod, longevity, longevityStart);
-        if (character.success === 1) {
+        if (character.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(character.message);
         } else {
             res.status(404).send(character.message);

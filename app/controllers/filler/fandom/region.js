@@ -1,11 +1,11 @@
-const mongoose = require('mongoose'),
-      Regions = require('../../../models/fandom/region'),
-      RegionScrapper = require('../../scraper/fandom/regions');
-
+const mongoose = require('mongoose');
+const Regions = require('../../../models/fandom/region');
+const RegionScrapper = require('../../scraper/fandom/region');
 
 class RegionFandomFiller {
-    constructor() {
+    constructor(policy) {
         this.scraper = new RegionScrapper();
+        this.policy = policy;
     }
 
     async fill() {
@@ -55,6 +55,11 @@ class RegionFandomFiller {
     }
 
     async insertToDb(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Regions.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomRegionFiller] '.green + 'error in saving to db: ' + err);

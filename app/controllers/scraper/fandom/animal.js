@@ -5,7 +5,7 @@ const rp = require('request-promise');
 class AnimalScrapper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -27,7 +27,6 @@ class AnimalScrapper {
                     let animal = {"title": null, "reference": null};
                     animal.title = $(this).children('a').attr('title')
                     animal.reference = $(this).children('a').attr('href')
-                    // console.log(animal.title);
 
                     if(!animal.title.match(/Category/g)) {
                         animals.push(animal);
@@ -36,9 +35,8 @@ class AnimalScrapper {
                 });
 
             }).catch(function (err) {
-            });
 
-        // console.log(animals);
+            });
 
         return animals;
 

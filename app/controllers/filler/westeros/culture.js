@@ -1,14 +1,10 @@
-const mongoose = require('mongoose'),
-    Cultures = require('../../../models/westeros/culture'),
-    CultureScraper = require('../../../controllers/scraper/westeros/cultures');
+const mongoose = require('mongoose');
+const Cultures = require('../../../models/westeros/culture');
+const CultureScraper = require('../../scraper/westeros/culture');
 
 
 class CulturesFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.scraper = new CultureScraper();
         this.policy = policy;
     }
@@ -56,7 +52,7 @@ class CulturesFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === this.POLICY_REFILL)
+        if(this.policy === FILLER_POLICY_REFILL)
         {
             await this.clearAll();
         }

@@ -1,5 +1,3 @@
-
-'use strict';
 const BayeseanAttributeStore = require('../../stores/bayeseanAttributes');
 
 class BayeseanAttributeController {
@@ -10,7 +8,7 @@ class BayeseanAttributeController {
     async getAll(req, res) {
         let characters = await this.baStore.getByWiki("westeros");
 
-        if (characters.success === 1) {
+        if (characters.success === STORE_RESPONSE_SUCCESS) {
             return res.status(200).send(characters.data);
         } else {
             return res.status(404).send(characters.message);
@@ -22,7 +20,7 @@ class BayeseanAttributeController {
 
         let bayeseanAttributes = await this.baStore.updateWiki("westeros", attributes);
 
-        if (bayeseanAttributes.success === 1) {
+        if (bayeseanAttributes.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(bayeseanAttributes.message);
         } else {
             res.status(404).send(bayeseanAttributes.message);

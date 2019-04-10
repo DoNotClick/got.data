@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 class EpisodeScraper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -72,7 +72,7 @@ class EpisodeScraper {
             "viewers": null,
 
             "runtime": null,
-            "written_by": null,
+            "written_by": [],
             "directed_by": null,
             "preview_text": null,
 

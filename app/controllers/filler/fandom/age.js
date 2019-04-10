@@ -1,10 +1,11 @@
-const mongoose = require('mongoose'),
-      Ages = require('../../../models/fandom/age'),
-      AgeScrapper = require('../../scraper/fandom/age');
+const mongoose = require('mongoose');
+const Ages = require('../../../models/fandom/age');
+const AgeScrapper = require('../../scraper/fandom/age');
 
 
 class AgeFandomFiller {
-    constructor() {
+    constructor(policy) {
+        this.policy = policy;
         this.scraper = new AgeScrapper();
     }
 
@@ -16,8 +17,6 @@ class AgeFandomFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
-
-            // console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -57,6 +56,11 @@ class AgeFandomFiller {
     }
 
     async insertToDb(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Ages.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomAgeFiller] '.green + 'error in saving to db: ' + err);

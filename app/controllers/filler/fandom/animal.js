@@ -1,10 +1,11 @@
-const mongoose = require('mongoose'),
-      Animals = require('../../../models/fandom/animal'),
-      AnimalScraper = require('../../scraper/fandom/animal');
+const mongoose = require('mongoose');
+const Animals = require('../../../models/fandom/animal');
+const AnimalScraper = require('../../scraper/fandom/animal');
 
 
 class AnimalFandomFiller {
-    constructor() {
+    constructor(policy) {
+        this.policy = policy;
         this.scraper = new AnimalScraper();
     }
 
@@ -51,6 +52,11 @@ class AnimalFandomFiller {
     }
 
     async insertToDb(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Animals.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomAnimalFiller] '.green + 'error in saving to db: ' + err);

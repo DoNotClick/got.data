@@ -1,10 +1,11 @@
-const mongoose = require('mongoose'),
-      Castles = require('../../../models/fandom/castle'),
-      CastleScrapper = require('../../scraper/fandom/castle');
+const mongoose = require('mongoose');
+const Castles = require('../../../models/fandom/castle');
+const CastleScrapper = require('../../scraper/fandom/castle');
 
 
 class CastleFandomFiller {
-    constructor() {
+    constructor(policy) {
+        this.policy = policy;
         this.scraper = new CastleScrapper();
     }
 
@@ -55,6 +56,11 @@ class CastleFandomFiller {
     }
 
     async insertToDb(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Castles.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomCastleFiller] '.green + 'error in saving to db: ' + err);

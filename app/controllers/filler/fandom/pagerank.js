@@ -2,14 +2,12 @@ const PageRankScraper = require('../../../controllers/scraper/fandom/pagerank');
 const PageRanks = require('../../../models/fandom/pagerank');
 
 class PageRankFiller {
-    constructor() {
+    constructor(policy) {
         this.scraper = new PageRankScraper();
+        this.policy = policy;
     }
 
     async fill() {
-        // scrape page ranks
-        // ! roughly 5000 entries, so this will take a while!
-        // ? Should this be started in the filler or should we pass it to this function ? 
         let data = await this.scraper.scrapePageRanks();
 
         // match to db schema
@@ -44,7 +42,11 @@ class PageRankFiller {
     }
 
     async insertAll(data) {
-        await this.clearAll();
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         console.log('[FandomPagerankFiller] '.green + 'writing to db...');
         try {
             return await PageRanks.insertMany(data, (err, docs) => {

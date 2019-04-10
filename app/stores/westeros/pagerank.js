@@ -3,7 +3,6 @@ const PageRanksWesteros = require('../../models/westeros/pagerank');
 class PageRankStore {
     constructor() {}
 
-
     // get list of pages, input: ['title1', 'title2']
     async getMultiple(data) {
         try {

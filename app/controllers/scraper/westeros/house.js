@@ -5,7 +5,7 @@ class HouseScraper {
     constructor()
     {
         this.bot = new MWBot({
-            apiUrl: 'https://awoiaf.westeros.org/api.php'
+            apiUrl: WESTEROS_API_URL
         });
     }
 
@@ -213,8 +213,6 @@ class HouseScraper {
         if(imgLink !== undefined) {
             result["image"] = "https://awoiaf.westeros.org" + imgLink;
         }
-
-        // console.log(result);
 
         return result;
     }

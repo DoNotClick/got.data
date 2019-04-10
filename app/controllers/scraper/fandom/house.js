@@ -5,7 +5,7 @@ const rp = require('request-promise');
 class HouseScrapper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -65,8 +65,6 @@ class HouseScrapper {
             })
             .catch(function (err) {
             });
-
-        // console.log(houses);
 
         return houses;
     }

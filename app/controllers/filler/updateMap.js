@@ -1,15 +1,14 @@
-const CharacterFiller = require('./map/character'),
-    EpisodeFiller = require('./map/episode'),
-    RegionFiller = require('./map/region');
-
+const CharacterFiller = require('./map/character');
+const EpisodeFiller = require('./map/episode');
+const RegionFiller = require('./map/region');
 
 class UpdateMap {
     constructor(db) {
         this.db = db;
 
-        this.characterFiller = new CharacterFiller(1);
-        this.episodeFiller = new EpisodeFiller(1);
-        this.regionFiller = new RegionFiller(1);
+        this.characterFiller = new CharacterFiller(FILLER_POLICY_REFILL);
+        this.episodeFiller = new EpisodeFiller(FILLER_POLICY_REFILL);
+        this.regionFiller = new RegionFiller(FILLER_POLICY_REFILL);
 
         this.collections = [
             'mapcharacters',

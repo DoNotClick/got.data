@@ -1,11 +1,10 @@
 const MWBot = require('mwbot');
 const cheerio = require('cheerio');
 
-
 class AgeScraper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -100,8 +99,6 @@ class AgeScraper {
         let n = d.getFullYear();
 
         ageItem.age = n - parseInt(dateofbirth);
-
-        // console.log(ageItem.age);
 
         return ageItem;
     }

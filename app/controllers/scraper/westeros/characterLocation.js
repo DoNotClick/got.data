@@ -2,13 +2,13 @@ const MWBot = require('mwbot');
 const cheerio = require('cheerio');
 const jsonfile = require('jsonfile');
 
-const CharactersScraper = require("./characters");
+const CharactersScraper = require("./character");
 
 class CharacterLocationScraper {
     constructor()
     {
         this.bot = new MWBot({
-            apiUrl: 'https://awoiaf.westeros.org/api.php'
+            apiUrl: WESTEROS_API_URL
         });
 
         this.characterscraper = new CharactersScraper();
@@ -74,7 +74,7 @@ class CharacterLocationScraper {
             return null;
         }
 
-        // console.log("scraping " + characterName);
+        console.log('[WesterosCharacterLocationScraper] '.green + "scraping " + characterName);
 
         let pageName = characterName.replace(/\s/g, "_");
         let data = await this.bot.request({
@@ -99,7 +99,6 @@ class CharacterLocationScraper {
         character.slug = pageName;
         character.locations = locationHits;
 
-        // console.log("Fetched " + character.name);
         console.log('[WesterosCharacterLocationScraper] '.green + "scraped locations " + character.locations);
 
         return character;

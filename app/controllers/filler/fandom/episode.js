@@ -1,11 +1,12 @@
-const mongoose = require('mongoose'),
-      Episodes = require('../../../models/fandom/episode'),
-      EpisodeScraper = require('../../../controllers/scraper/fandom/episodes');
+const mongoose = require('mongoose');
+const Episodes = require('../../../models/fandom/episode');
+const EpisodeScraper = require('../../scraper/fandom/episode');
 
 
 class EpisodeFandomFiller {
-    constructor() {
+    constructor(policy) {
         this.scraper = new EpisodeScraper();
+        this.policy = policy;
     }
 
     async fill() {
@@ -52,6 +53,11 @@ class EpisodeFandomFiller {
     }
 
     async insertAll(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Episodes.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomEpisodeFiller] '.green + 'error in saving to db: ' + err);

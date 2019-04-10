@@ -3,7 +3,6 @@ const Regions = require('../../models/westeros/region');
 class RegionStore {
     constructor() {}
 
-
     // get list of regions, input: ['name1', 'name2']
     async getMultiple(data) {
         try {

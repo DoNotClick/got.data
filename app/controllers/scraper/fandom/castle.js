@@ -5,7 +5,7 @@ const rp = require('request-promise');
 class CastleScrapper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -27,7 +27,6 @@ class CastleScrapper {
                     let castle = {"title": null, "reference": null};
                     castle.title = $(this).children('a').attr('title')
                     castle.reference = $(this).children('a').attr('href')
-                    // console.log(castle.title);
 
                     if(!castle.title.match(/Category/g)) {
                         castles.push(castle);
@@ -38,8 +37,6 @@ class CastleScrapper {
             })
             .catch(function (err) {
             });
-
-        // console.log(castles);
 
         return castles;
 

@@ -7,7 +7,7 @@ class EventController {
 
     async getAll(req, res) {
         let events = await this.eventStore.getAll();
-        if (events.success === 1) {
+        if (events.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(events.data);
         } else {
             res.status(404).send(events.message);
@@ -16,7 +16,7 @@ class EventController {
     
     async getByName(req, res) {
         let events = await this.eventStore.getByName(req.params.name);
-        if (events.success === 1) {
+        if (events.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(events.data);
         } else {
             res.status(404).send(events.message);

@@ -7,7 +7,7 @@ class BastardController {
 
     async getAll(req, res) {
         let bastards = await this.bastardStore.getAll();
-        if (bastards.success === 1) {
+        if (bastards.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(bastards.data);
         } else {
             res.status(404).send(bastards.message);
@@ -16,11 +16,12 @@ class BastardController {
     
     async getByName(req, res) {
         let bastards = await this.bastardStore.getByName(req.params.name);
-        if (bastards.success === 1) {
+        if (bastards.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(bastards.data);
         } else {
             res.status(404).send(bastards.message);
         }
     }
 }
+
 module.exports = BastardController;

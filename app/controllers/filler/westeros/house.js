@@ -1,14 +1,10 @@
-const mongoose = require('mongoose'),
-    Houses = require('../../../models/westeros/house'),
-    HouseScraper = require('../../../controllers/scraper/westeros/houses');
+const mongoose = require('mongoose');
+const Houses = require('../../../models/westeros/house');
+const HouseScraper = require('../../scraper/westeros/house');
 
 
 class HousesFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.scraper = new HouseScraper();
         this.policy = policy;
     }
@@ -61,7 +57,7 @@ class HousesFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === this.POLICY_REFILL)
+        if(this.policy === FILLER_POLICY_REFILL)
         {
             await this.clearAll();
         }

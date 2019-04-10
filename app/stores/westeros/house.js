@@ -3,7 +3,6 @@ const Houses = require('../../models/westeros/house');
 class HouseStore {
     constructor() {}
 
-
     // get list of houses, input: ['name1', 'name2']
     async getMultiple(data) {
         try {

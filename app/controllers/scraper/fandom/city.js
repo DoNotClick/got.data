@@ -5,7 +5,7 @@ const rp = require('request-promise');
 class CityScrapper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -26,7 +26,6 @@ class CityScrapper {
                     let city = {"title": null, "reference": null};
                     city.title = $(this).children('a').attr('title')
                     city.reference = $(this).children('a').attr('href')
-                    // console.log(city.title);
 
                     if (!city.title.match(/Category/g)) {
                         cities.push(city);
@@ -37,8 +36,6 @@ class CityScrapper {
             })
             .catch(function (err) {
             });
-
-        // console.log(cities);
 
         return cities;
 

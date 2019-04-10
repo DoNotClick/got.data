@@ -1,10 +1,11 @@
-const mongoose = require('mongoose'),
-      Battles = require('../../../models/fandom/battle'),
-      BattleScraper = require('../../scraper/fandom/battle');
+const mongoose = require('mongoose');
+const Battles = require('../../../models/fandom/battle');
+const BattleScraper = require('../../scraper/fandom/battle');
 
 
 class BattleFandomFiller {
-    constructor() {
+    constructor(policy) {
+        this.policy = policy;
         this.scraper = new BattleScraper();
     }
 
@@ -55,6 +56,11 @@ class BattleFandomFiller {
     }
 
     async insertToDb(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Battles.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomBattleFiller] '.green + 'error in saving to db: ' + err);

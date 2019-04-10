@@ -1,14 +1,10 @@
-const mongoose = require('mongoose'),
-    Ages = require('../../../models/westeros/age'),
-    AgesScraper = require('../../../controllers/scraper/westeros/ages');
+const mongoose = require('mongoose');
+const Ages = require('../../../models/westeros/age');
+const AgesScraper = require('../../scraper/westeros/age');
 
 
 class AgesFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.scraper = new AgesScraper();
         this.policy = policy;
     }
@@ -99,7 +95,7 @@ class AgesFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === this.POLICY_REFILL)
+        if(this.policy === FILLER_POLICY_REFILL)
         {
             await this.clearAll();
         }

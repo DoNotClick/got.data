@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 class ReligionScraper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 

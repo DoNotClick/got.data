@@ -1,13 +1,9 @@
-const mongoose = require('mongoose'),
-    Cities = require('../../../models/westeros/city'),
-    jsonfile = require('jsonfile');
+const mongoose = require('mongoose');
+const Cities = require('../../../models/westeros/city');
+const jsonfile = require('jsonfile');
 
 class CityFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.policy = policy;
     }
 
@@ -22,7 +18,22 @@ class CityFiller {
 
                 console.log('[WesterosCityFiller] '.green + 'Cities from  file "'+file+'". No scrapping.');
 
-                resolve(obj);
+                let result = obj.filter(function(item, pos) {
+                    for(let i = 0; i < obj.length; i++) {
+                        if(i === pos) {
+                            break;
+                        }
+
+                        if(obj[i]["name"] === item["name"])
+                        {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+
+                resolve(result);
             });
         });
     }
@@ -75,7 +86,7 @@ class CityFiller {
 
     async insertAll(data) {
         // clear collection
-        if(this.policy === this.POLICY_REFILL)
+        if(this.policy === FILLER_POLICY_REFILL)
         {
             await this.clearAll();
         }
@@ -86,7 +97,7 @@ class CityFiller {
                     console.warn('[WesterosCityFiller] '.green + 'error in saving to db: ' + err);
                     return;
                 }
-                console.log('[WesterosCityFiller] '.green + docs.length + ' events successfully saved to MongoDB!');
+                console.log('[WesterosCityFiller] '.green + docs.length + ' cities successfully saved to MongoDB!');
             });
         } catch (error) {
             throw new Error(error);

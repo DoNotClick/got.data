@@ -1,11 +1,12 @@
-const mongoose = require('mongoose'),
-      Towns = require('../../../models/fandom/town'),
-      TownScraper = require('../../scraper/fandom/town');
+const mongoose = require('mongoose');
+const Towns = require('../../../models/fandom/town');
+const TownScraper = require('../../scraper/fandom/town');
 
 
 class TownFandomFiller {
-    constructor() {
+    constructor(policy) {
         this.scraper = new TownScraper();
+        this.policy = policy;
     }
 
     async fill() {
@@ -51,6 +52,11 @@ class TownFandomFiller {
     }
 
     async insertToDb(data) {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
         await Towns.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomTownFiller] '.green + 'error in saving to db: ' + err);

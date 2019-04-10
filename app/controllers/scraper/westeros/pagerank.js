@@ -5,14 +5,12 @@ class PageRankScraper {
 
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://awoiaf.westeros.org/api.php'
+            apiUrl: WESTEROS_API_URL
         });
 
         this.ranks = false;
         this.visited = [];
         this.pending = [];
-
-        // console.log(this.ranks)
     }
 
     async scrapePageRanks()
@@ -108,7 +106,7 @@ class PageRankScraper {
 
             self.pending.push(nextPage);
         });
-        // console.log('page: ' + page + ' rank: ' + this.ranks[page]);
+
         return true;
     }
 }

@@ -7,7 +7,7 @@ class CastleController {
 
     async getAll(req, res) {
         let castles = await this.castleStore.getAll();
-        if (castles.success === 1) {
+        if (castles.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(castles.data);
         } else {
             res.status(404).send(castles.message);
@@ -16,7 +16,7 @@ class CastleController {
     
     async getByName(req, res) {
         let castles = await this.castleStore.getByName(req.params.name);
-        if (castles.success === 1) {
+        if (castles.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(castles.data);
         } else {
             res.status(404).send(castles.message);
@@ -25,11 +25,12 @@ class CastleController {
 
     async getByLocation(req, res) {
         let castles = await this.castleStore.getByLocation(req.params.location);
-        if (castles.success === 1) {
+        if (castles.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(castles.data);
         } else {
             res.status(404).send(castles.message);
         }
     }
 }
+
 module.exports = CastleController;

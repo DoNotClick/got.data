@@ -7,7 +7,7 @@ class RegionController {
 
     async getAll(req, res) {
         let regions = await this.regionStore.getAll();
-        if (regions.success === 1) {
+        if (regions.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(regions.data);
         } else {
             res.status(404).send(regions.message);
@@ -16,7 +16,7 @@ class RegionController {
     
     async getByName(req, res) {
         let regions = await this.regionStore.getByName(req.params.name);
-        if (regions.success === 1) {
+        if (regions.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(regions.data);
         } else {
             res.status(404).send(regions.message);
@@ -25,7 +25,7 @@ class RegionController {
 
     async getByContinent(req, res) {
         let regions = await this.regionStore.getByContinent(req.params.continent);
-        if (regions.success === 1) {
+        if (regions.success === STORE_RESPONSE_SUCCESS) {
             res.status(200).send(regions.data);
         } else {
             res.status(404).send(regions.message);

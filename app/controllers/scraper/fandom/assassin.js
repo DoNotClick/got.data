@@ -5,7 +5,7 @@ const rp = require('request-promise');
 class AssassinScrapper {
     constructor() {
         this.bot = new MWBot({
-            apiUrl: 'https://gameofthrones.fandom.com/api.php'
+            apiUrl: FANDOM_API_URL
         });
     }
 
@@ -26,7 +26,6 @@ class AssassinScrapper {
                 $('li[class=category-page__member]').each(function (index) {
                     let assassin = {"slug": null};
                     assassin.slug = $(this).children('a').attr('href').replace('/wiki/', '')
-                    // console.log(assassin);
 
                     if(!assassin.slug.match(/Category/g)) {
                         assassins.push(assassin);

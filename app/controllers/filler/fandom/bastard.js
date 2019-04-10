@@ -1,11 +1,12 @@
-const mongoose = require('mongoose'),
-      Bastards = require('../../../models/fandom/bastard'),
-      BastardsScraper = require('../../scraper/fandom/bastard');
+const mongoose = require('mongoose');
+const Bastard = require('../../../models/fandom/bastard');
+const BastardScraper = require('../../scraper/fandom/bastard');
 
 
-class BastardsFandomFiller {
-    constructor() {
-        this.scraper = new BastardsScraper();
+class BastardFandomFiller {
+    constructor(policy) {
+        this.policy = policy;
+        this.scraper = new BastardScraper();
     }
 
     async fill() {
@@ -16,8 +17,6 @@ class BastardsFandomFiller {
             await this.clearAll();
             // match scraped data to model
             data = await this.matchToModel(data);
-
-            // console.log(data.length);
             // add to DB
             await this.insertToDb(data);
         } catch (error) {
@@ -28,7 +27,7 @@ class BastardsFandomFiller {
     // remove collection
     async clearAll() {
         console.log('[FandomBastardFiller] '.green + 'clearing collection...');
-        await Bastards.deleteMany({}, (err, data) => {
+        await Bastard.deleteMany({}, (err, data) => {
             if (err) {
                 console.warn('[FandomBastardFiller] '.green + 'error in removing collection: ' + err);
             } else {
@@ -40,7 +39,7 @@ class BastardsFandomFiller {
     async matchToModel(bastards) {
         console.log('[FandomBastardFiller] '.green + 'formating and saving scraped data to DB... this may take a few seconds');
         bastards.map(bastard => {
-            let newBastard = new Bastards();
+            let newBastard = new Bastard();
             for(let attr in bastard) {
                 newBastard[attr] = bastard[attr];
             }
@@ -52,7 +51,12 @@ class BastardsFandomFiller {
     }
 
     async insertToDb(data) {
-        await Bastards.insertMany(data, (err, docs) => {
+        if(this.policy === FILLER_POLICY_REFILL)
+        {
+            await this.clearAll();
+        }
+
+        await Bastard.insertMany(data, (err, docs) => {
             if (err) {
                 console.warn('[FandomBastardFiller] '.green + 'error in saving to db: ' + err);
                 return;
@@ -61,4 +65,5 @@ class BastardsFandomFiller {
         });
     }
 }
-module.exports = BastardsFandomFiller;
+
+module.exports = BastardFandomFiller;

@@ -1,14 +1,10 @@
-const mongoose = require('mongoose'),
-    Characters = require('../../../models/westeros/character'),
-    CharacterScraper = require('../../../controllers/scraper/westeros/characters');
+const mongoose = require('mongoose');
+const Characters = require('../../../models/westeros/character');
+const CharacterScraper = require('../../scraper/westeros/character');
 
 
 class CharacterFiller {
     constructor(policy) {
-        this.POLICY_REFILL = 1;
-        this.POLICY_UPDATE = 2;
-        this.POLICY_SAFE_UPDATE = 3;
-
         this.scraper = new CharacterScraper();
         this.policy = policy;
     }
@@ -64,12 +60,12 @@ class CharacterFiller {
 
     async insertAll(data) {
         try {
-            if(this.policy === this.POLICY_REFILL) {
+            if(this.policy === FILLER_POLICY_REFILL) {
                 console.log('[WesterosCharacterFiller] '.green + 'starting whole refill')
                 await this.clearAll();
                 await this.fillCollection(data);
             }
-            else if (this.policy === this.POLICY_UPDATE) {
+            else if (this.policy === FILLER_POLICY_UPDATE) {
                 console.log('[WesterosCharacterFiller] '.green + 'starting update');
                 await this.updateCollection(data);
             } else {
@@ -116,6 +112,7 @@ class CharacterFiller {
                 });
 
             });
+
             return await Promise.all(promises);
         } catch (e) {
             throw new Error(e);
@@ -125,16 +122,38 @@ class CharacterFiller {
 
     async fillCollection(data) {
         try {
-            return await Characters.insertMany(data, (err, docs) => {
-                if (err) {
-                    console.warn('[WesterosCharacterFiller] '.green + 'error in saving to db: ' + err);
-                    return;
-                } 
-                console.log('[WesterosCharacterFiller] '.green + docs.length + ' characters successfully saved to MongoDB!');
-            });
+            let chunks = this.chuckCharacters(data);
+
+            for(let i = 0; i < chunks.length; i++)
+            {
+                await Characters.insertMany(chunks[i], (err, docs) => {
+                    if (err) {
+                        console.warn('[WesterosCharacterFiller] '.green + 'error in saving to db: ' + err);
+                        return;
+                    }
+
+                    console.log('[WesterosCharacterFiller] '.green + docs.length + ' characters successfully saved to MongoDB!');
+                });
+            }
         } catch (error) {
             throw new Error(error);
         }
+    }
+
+    chuckCharacters(characters) {
+        const chunk_size = 500;
+
+        let index = 0;
+        let arrayLength = characters.length;
+        let tempArray = [];
+
+        for (index = 0; index < arrayLength; index += chunk_size) {
+            let myChunk = characters.slice(index, index+chunk_size);
+            // Do something if you want with the group
+            tempArray.push(myChunk);
+        }
+
+        return tempArray;
     }
 }
 
