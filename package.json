@@ -1,9 +1,9 @@
 {
   "name": "got-api",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "This package provides an api that scrapes data from a wiki",
   "main": "app.js",
-  "author": "",
+  "author": "https://got.show/about",
   "license": "ISC",
   "private": true,
   "homepage": "https://github.com/got-show/got.data",

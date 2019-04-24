@@ -2,16 +2,25 @@
   {
     "name": "Essos",
     "cardinalDirection": "east",
-    "neighbors": ["Westeros","Sothoryos"]
+    "neighbors": [
+      "Westeros",
+      "Sothoryos"
+    ]
   },
   {
     "name": "Sothoryos",
     "cardinalDirection": "south",
-    "neighbors": ["Essos","Westeros"]
+    "neighbors": [
+      "Essos",
+      "Westeros"
+    ]
   },
   {
     "name": "Westeros",
     "cardinalDirection": "west",
-    "neighbors": ["Essos","Sothoryos"]
+    "neighbors": [
+      "Essos",
+      "Sothoryos"
+    ]
   }
 ]

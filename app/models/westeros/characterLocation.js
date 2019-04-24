@@ -1,9 +1,18 @@
 const mongoose = require('mongoose');
-const Schema   = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const CharacterLocationSchema = new Schema({
-    name : {type: String, ref: 'WesterosCharacter', required: true, unique: true},
-    slug: {type: String, unique: true, required: true},
+    name: {
+        type: String,
+        ref: 'WesterosCharacter',
+        required: true,
+        unique: true
+    },
+    slug: {
+        type: String,
+        unique: true,
+        required: true
+    },
     locations: [String]
 });
 

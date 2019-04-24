@@ -2,7 +2,7 @@ version: '2'
 services:
     web-app:
         container_name: got_webservice
-        image: sacdallago/api.got.show
+        build: .
         depends_on:
             - database
         volumes:
@@ -12,9 +12,7 @@ services:
         environment:
             - databaseuri=database
             - databasecollection=got
-            - databaseuser=got
-            - databasepassword=got
-            - accesstoken=GOT2019ACCESStoken
+            - accesstoken=<ACCESSTOKEN>
         ports:
             - 3032:3000
     database:
@@ -25,11 +23,7 @@ services:
             - mongodb:/data/db
             - mongodb_config:/data/configdb
         environment:
-            - MONGO_INITDB_ROOT_USERNAME=got
-            - MONGO_INITDB_ROOT_PASSWORD=got
             - MONGO_INITDB_DATABASE=got
-            - MONGODB_USERNAME=got
-            - MONGODB_PASSWORD=got
             - MONGODB_DATABASE=got
 volumes:
     mongodb:

@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
-const Schema   = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const AssassinFandomSchema = new Schema({
-    slug      : {type: String, required: true}
-}, { 
-    toJSON: { virtuals: true }, 
-    toObject: { virtuals: true } 
+    slug: {
+        type: String,
+        required: true
+    }
+}, {
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
 });
 
 AssassinFandomSchema.virtual('assassin', {
@@ -15,7 +18,7 @@ AssassinFandomSchema.virtual('assassin', {
     justOne: true
 });
 
-let autoPopulate = function(next) {
+let autoPopulate = function (next) {
     this.populate('assassin');
     next();
 };

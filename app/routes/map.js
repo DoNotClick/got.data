@@ -1,11 +1,11 @@
-const CharacterController = require("../controllers/mapController/characterController");
-const CharacterLocationController = require("../controllers/mapController/characterLocationController");
-const CharacterPathController = require("../controllers/mapController/characterPathController");
-const CityController = require("../controllers/mapController/cityController");
-const EpisodeController = require("../controllers/mapController/episodeController");
-const RegionController = require("../controllers/mapController/regionController");
+const CharacterController = require('../controllers/map/characterController');
+const CharacterLocationController = require('../controllers/map/characterLocationController');
+const CharacterPathController = require('../controllers/map/characterPathController');
+const CityController = require('../controllers/map/cityController');
+const EpisodeController = require('../controllers/map/episodeController');
+const RegionController = require('../controllers/map/regionController');
 
-module.exports = function(app, router) {
+module.exports = function (app, router) {
     const characterController = new CharacterController();
     router.get('/characters', characterController.getAll.bind(characterController));
     router.get('/characters/:name', characterController.getByName.bind(characterController));

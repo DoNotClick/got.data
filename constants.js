@@ -10,3 +10,8 @@ global.FILLER_POLICY_SAFE_UPDATE = 3;
 global.STORE_RESPONSE_SUCCESS = 1;
 global.STORE_RESPONSE_ERROR = 0;
 global.STORE_RESPONSE_EMPTY = -1;
+
+require('colors');
+require('console-stamp')(console, {
+    format: ':date(dd.mm.yyyy HH:MM:ss.l).yellow :label(7).white'
+});

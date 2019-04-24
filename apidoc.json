@@ -1,7 +1,7 @@
 {
   "name": "Game of Thrones API",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This API supplies any and all information one would want to know about the TV show Game of Thrones",
   "title": "GOT API",
-  "url" : "https://api.got.show"
+  "url": "https://api.got.show"
 }
